@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 TECH=("BUY" "USE" "BREAK" "FIX"
       "TRASH" "CHANGE" "MAIL" "UPGRADE"
