@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Write YOUR_API_KEY here.
-API_KEY=gjqrfkj7viv9qgjq
+API_KEY=
 
 # You can choose default speaker from
 # show, haruka, hikari, takeru, santa, or bear.
