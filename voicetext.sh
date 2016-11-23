@@ -6,6 +6,7 @@ API_KEY=
 # You can choose default speaker from
 # show, haruka, hikari, takeru, santa, or bear.
 SPEAKER=hikari
+FORMAT=ogg
 
 #Do not change below.
 if [ ! $API_KEY ]; then
@@ -56,9 +57,9 @@ else
   done
   if [ "$APITEXT" ]; then
     curl $API_URI -u "$API_KEY:" \
-    -d "text=$APITEXT" -d "speaker=$SPEAKER" -d "format=$FORMAT"\
+    -d "text=$APITEXT" -d "speaker=$SPEAKER" -d "format=$FORMAT" \
     -d "emotion=$EMOTION" -d "emotion_level=$EMOLEVEL" \
-    -d "pitch=$APITCH" -d "speed=$SPEED" -d "volume=$VOLUME" | play -
+    -d "pitch=$APITCH" -d "speed=$SPEED" -d "volume=$VOLUME" | ogg123 -
   fi
 fi
 
