@@ -9,6 +9,5 @@ NR_SS=`awk '/^\*/{print NR}' $DYNFILE | grep -A1 $NR_ND | grep -v $NR_ND`
 cat $DYNFILE | \
   sed `expr $NR_ES + 1`,`expr $NR_EE - 1`d | \
   sed `expr $NR_ND - \( $NR_EE - $NR_ES \) + 2`,`expr $NR_ES - $NR_EE + $NR_SS`d | \
-  sed 's/^\*ELEMENT_SHELL$/&\n.DS C\n(omitted)\n.DE\n/' | \
-  sed 's/^\*NODE$/&\n.DS C\n(omitted)\n.DE\n/'
-
+  sed 's/^\*ELEMENT_SHELL$/&\n-------------------------------->8================================/' | \
+  sed 's/^\*NODE$/&\n-------------------------------->8================================/'
