@@ -8,4 +8,4 @@ Daft Punkの曲をあなたのターミナル上で再現。ncursesとfigletが�
 ## nmea0183.sh
 秋月の[GPS受信機キット](http://akizukidenshi.com/catalog/g/gK-09991/)にcuでシリアル接続したときの動作を模擬します。
 ## dyn2roff.sh
-./dyn2roff.sh _file_ | groff - -ms -Tpdf > _output_.pdf
+dyn2roff.sh _file_ | groff -ms -Tpdf > _output_.pdf
