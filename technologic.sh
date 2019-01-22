@@ -20,4 +20,4 @@ for ((i=0; i<${#TECH[@]}; i++))
 do
 clear ; echo ${TECH[i]} | figlet -c ; sleep 0.4
 done
-unset TECH ; clear
+

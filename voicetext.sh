@@ -63,13 +63,3 @@ else
   fi
 fi
 
-unset API_KEY
-unset API_URI
-unset APITEXT
-unset SPEAKER
-unset FORMAT
-unset EMOTION
-unset EMOLEVEL
-unset APITCH
-unset SPEED
-unset VOLUME

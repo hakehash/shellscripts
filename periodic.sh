@@ -23,4 +23,3 @@ else
  echo -e ${p[@]} | awk -v num=$1 '{print $num}' | sed 's/_/ /g'
 fi
 
-unset p la ac
