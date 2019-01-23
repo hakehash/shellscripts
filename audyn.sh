@@ -1,6 +1,6 @@
 #!/bin/sh
 
-PATH_TO_LSDYNA=/mnt/d/LSDYNA/programs/
+PATH_TO_LSDYNA=/mnt/d/LSDYNA/program/
 NAME_OF_EXEC=ls-dyna_smp_s_R10.0_winx64_ifort131.exe
 PATH_TO_KEYFILE=`dirname $1`
 KEYWORD_FILENAME=`basename $1`
