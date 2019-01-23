@@ -26,8 +26,8 @@ do
       else print$0
     }' > $DYNA_I
   fi
-  DYNA_I_win=`echo $DYNA_I | sed  -e 's/\/mnt\/f/F\:/' | sed -e 's/\/\\/g'`
-  DYNA_O_win=`echo $DYNA_O | sed  -e 's/\/mnt\/f/F\:/' | sed -e 's/\/\\/g'`
+  DYNA_I_win=`echo $DYNA_I | sed  -e 's/\/mnt\/f/F\:/' | sed -e 's/\//\\/g'`
+  DYNA_O_win=`echo $DYNA_O | sed  -e 's/\/mnt\/f/F\:/' | sed -e 's/\//\\/g'`
   echo $PATH_TO_LSDYNA$NAME_OF_EXEC I\=$DYNA_I_win O\=$DYNA_O_win
   echo $YmdHMS done at `date` >> $PATH_TO_KEYFILE/autolog.txt
 done
