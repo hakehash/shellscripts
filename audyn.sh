@@ -8,7 +8,7 @@ PATH_TO_KEYFILE=`dirname $1`
 KEYWORD_FILENAME=`basename $1`
 NR_m=`grep \*SECTION_SHELL_TITLE $1 -A4 -n | grep wall$ | sed -e 's/-.*//g'`
 NR_s=`grep \*SECTION_SHELL_TITLE $1 -A4 -n | grep wall_side | sed -e 's/-.*//g'`
-for t in `seq 3 9`
+for t in `seq 2 9`
 do
   YmdHMS=`date +%Y%m%dT%H%M%S`_${t}mm
   mkdir $PATH_TO_KEYFILE/${YmdHMS}
