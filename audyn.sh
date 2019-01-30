@@ -28,12 +28,14 @@ do
       else print$0
     }' > $DYNA_I
   fi
-  DYNA_I_win=`echo $DYNA_I | sed  -e 's/\/mnt\/f/F:/' | sed -e 's/\//\\\\\\\\/g'`
-  DYNA_O_win=`echo $DYNA_O | sed  -e 's/\/mnt\/f/F:/' | sed -e 's/\//\\\\\\\\/g'`
+  if [ `uname -r | grep Microsoft` ]; then
+    DYNA_I=`echo $DYNA_I | sed  -e 's/\/mnt\/f/F:/' | sed -e 's/\//\\\\\\\\/g'`
+    DYNA_O=`echo $DYNA_O | sed  -e 's/\/mnt\/f/F:/' | sed -e 's/\//\\\\\\\\/g'`
+  fi
   cd $PATH_TO_KEYFILE/${YmdHMS}
-  $PATH_TO_LSDYNA$NAME_OF_EXEC I\=$DYNA_I_win O\=$DYNA_O_win
+  $PATH_TO_LSDYNA$NAME_OF_EXEC I\=$DYNA_I O\=$DYNA_O
   cd -
-  echo $YmdHMS done at `date` >> $PATH_TO_KEYFILE/autolog.txt
+  echo $YmdHMS \($KEYWORD_FILENAME\) done at `date` >> $PATH_TO_KEYFILE/autolog.txt
 done
 fi
 
