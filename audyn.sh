@@ -34,6 +34,7 @@ do
   fi
   cd $PATH_TO_KEYFILE/${YmdHMS}
   $PATH_TO_LSDYNA$NAME_OF_EXEC I\=$DYNA_I O\=$DYNA_O
+  `dirname $0`/secf2csv.sh secforc
   cd -
   echo $YmdHMS \($KEYWORD_FILENAME\) done at `date` | tee -a $PATH_TO_KEYFILE/autolog.txt
 done
