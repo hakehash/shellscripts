@@ -3,9 +3,9 @@
 # cal: nicer interface to /usr/bin/cal
 
 case $# in
-  0)    set `env LANG=C date`; m=$2; y=$6 ;; # no args: use today
-  1)    m=$1; set `env LANG=C date`; y=$6 ;; # 1 arg: use this year
-  *)    m=$1; y=$2 ;;                        # 2 args: month and year
+  0)    set `env -i date`; m=$2; y=$6 ;; # no args: use today
+  1)    m=$1; set `env -i date`; y=$6 ;; # 1 arg: use this year
+  *)    m=$1; y=$2 ;;                    # 2 args: month and year
 esac
 
 case $m in
