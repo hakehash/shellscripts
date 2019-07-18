@@ -31,6 +31,9 @@ do
   if [ `uname -r | grep Microsoft` ]; then
     DYNA_I=`echo $DYNA_I | sed  -e 's/\/mnt\/f/F:/' | sed -e 's/\//\\\\\\\\/g'`
     DYNA_O=`echo $DYNA_O | sed  -e 's/\/mnt\/f/F:/' | sed -e 's/\//\\\\\\\\/g'`
+  elif [ `uname -a | grep Cygwin` ]; then
+    DYNA_I=`echo $DYNA_I | sed  -e 's/\/cygdrive\/f/F:/' | sed -e 's/\//\\\\\\\\/g'`
+    DYNA_O=`echo $DYNA_O | sed  -e 's/\/cygdrive\/f/F:/' | sed -e 's/\//\\\\\\\\/g'`
   fi
   cd $PATH_TO_KEYFILE/${YmdHMS}
   $PATH_TO_LSDYNA$NAME_OF_EXEC I\=$DYNA_I O\=$DYNA_O
