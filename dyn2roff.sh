@@ -9,9 +9,9 @@ else
 fi
 if [ "$DYNFILE" ]; then
   NR_ES=`awk '/^\*ELEMENT_SHELL$/{print NR}' $DYNFILE`
-  NR_EE=`awk '/^\*/{print NR}' $DYNFILE | grep -A1 $NR_ES | grep -v $NR_ES`
+  NR_EE=`awk '/^\*/{print NR}' $DYNFILE | grep -A1 ^$NR_ES$ | grep -v ^$NR_ES$`
   NR_ND=`awk '/^\*NODE$/{print NR}' $DYNFILE`
-  NR_SS=`awk '/^\*/{print NR}' $DYNFILE | grep -A1 $NR_ND | grep -v $NR_ND`
+  NR_SS=`awk '/^\*/{print NR}' $DYNFILE | grep -A1 ^$NR_ND$ | grep -v ^$NR_ND$`
   OMITT=--------------------------------\>8--------------------------------
   echo ".ft C\n.nf"
   cat $DYNFILE | \
