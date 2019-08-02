@@ -3,7 +3,7 @@
 if [ -p /dev/stdin ]; then
   DYNFILE=`cat -`
 elif [ $# -eq 0 ]; then
-  echo "usage:\t`basename $0` file | groff -ms -Tpdf > output.pdf"
+  echo "usage:\t`basename $0` file | groff -ms -Tpdf > output.pdf" 1>&2
 else
   DYNFILE=$1
 fi

@@ -10,8 +10,8 @@ FORMAT=ogg
 
 #Do not change below.
 if [ ! $API_KEY ]; then
-  echo 'Please register at https://cloud.voicetext.jp/webapi/api_keys/new'
-  echo 'and then write YOUR_API_KEY in this script file.' 
+  echo 'Please register at https://cloud.voicetext.jp/webapi/api_keys/new' 1>&2
+  echo 'and then write YOUR_API_KEY in this script file.' 1>&2
 else
   API_URI="https://api.voicetext.jp/v1/tts"
   if [ -p /dev/stdin ]; then
