@@ -31,7 +31,7 @@ if [ "$DYNFILE" ]; then
   NR_EE=`awk '/^\*/{print NR}' $DYNFILE | grep -A1 ^$NR_ES$ | grep -v ^$NR_ES$`
   NR_ND=`awk '/^\*NODE$/{print NR}' $DYNFILE`
   NR_SS=`awk '/^\*/{print NR}' $DYNFILE | grep -A1 ^$NR_ND$ | grep -v ^$NR_ND$`
-  OMITT=--------------------------------\>8--------------------------------
+  OMITT=---------------------------------------\>8---------------------------------------
   if [ "$IsLaTeX" -ne 0 ]; then
     echo "\\\\begin{verbatim}"
   else
