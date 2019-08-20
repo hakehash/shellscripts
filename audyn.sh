@@ -2,8 +2,9 @@
 if [ $# -eq 0 ]; then
   echo "usage:\t`basename $0` /path/to/keywordfile.dyn" 1>&2
 else
-PATH_TO_LSDYNA=/mnt/d/LSDYNA/program/
-NAME_OF_EXEC=ls-dyna_smp_s_R10.0_winx64_ifort131.exe
+PATH_TO_LSDYNA=/mnt/c/LSDYNA/program/
+#NAME_OF_EXEC=ls-dyna_smp_s_R10.0_winx64_ifort131.exe
+NAME_OF_EXEC=ls-dyna_smp_s_R901_winx64_ifort131.exe
 PATH_TO_KEYFILE=`dirname $1`
 KEYWORD_FILENAME=`basename $1`
 #NR_m=`grep \*SECTION_SHELL_TITLE $1 -A4 -n | grep wall$ | sed -e 's/-.*//g'`
