@@ -10,7 +10,7 @@ KEYWORD_FILENAME=`basename $1 .dyn`
 #NR_m=`grep \*SECTION_SHELL_TITLE $1 -A4 -n | grep wall$ | sed -e 's/-.*//g'`
 #NR_s=`grep \*SECTION_SHELL_TITLE $1 -A4 -n | grep wall_side | sed -e 's/-.*//g'`
 NR_p=`grep \*SECTION_SHELL_TITLE $1 -A4 -n | grep plate$ | sed -e 's/-.*//g'`
-for t in `seq 20 5 35`
+for t in `seq 10 5 35`
 do
   #YmdHMS=`date +%Y%m%dT%H%M%S`_${t}mm
   YmdHMS=${KEYWORD_FILENAME}_t${t}mm
@@ -33,7 +33,7 @@ do
   else
     cat $1 | \
     awk '{
-      if(NR_p=='$NR_p+4') printf "%10.1f%10.1f%10.1f%10.1f%10.1f%10.1f%10.1f%10d\n",'$t','$t','$t','$t',0,0,0,0
+      if(NR=='$NR_p+4') printf "%10.1f%10.1f%10.1f%10.1f%10.1f%10.1f%10.1f%10d\n",'$t','$t','$t','$t',0,0,0,0
       else print$0
     }' > $DYNA_I
   fi
