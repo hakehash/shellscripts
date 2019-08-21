@@ -15,7 +15,7 @@ do
   #YmdHMS=`date +%Y%m%dT%H%M%S`_${t}mm
   YmdHMS=${KEYWORD_FILENAME}_t${t}mm
   mkdir $PATH_TO_KEYFILE/${YmdHMS}
-  DYNA_I=$PATH_TO_KEYFILE/${YmdHMS}/${YmdHMS}
+  DYNA_I=$PATH_TO_KEYFILE/${YmdHMS}/${YmdHMS}.dyn
   DYNA_O=$PATH_TO_KEYFILE/${YmdHMS}/d3hsp
   if [ -n "$NR_s" ]; then
     cat $1 | \
