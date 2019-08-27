@@ -7,9 +7,11 @@ PATH_TO_LSDYNA=/mnt/c/LSDYNA/program/
 NAME_OF_EXEC=ls-dyna_smp_s_R901_winx64_ifort131.exe
 PATH_TO_KEYFILE=`dirname $1`
 KEYWORD_FILENAME=`basename $1 .dyn`
+LOG_FILENAME=autolog.txt
 #NR_m=`grep \*SECTION_SHELL_TITLE $1 -A4 -n | grep wall$ | sed -e 's/-.*//g'`
 #NR_s=`grep \*SECTION_SHELL_TITLE $1 -A4 -n | grep wall_side | sed -e 's/-.*//g'`
 NR_p=`grep \*SECTION_SHELL_TITLE $1 -A4 -n | grep plate$ | sed -e 's/-.*//g'`
+touch $LOG_FILENAME
 for t in `seq 10 5 35`
 do
   #YmdHMS=`date +%Y%m%dT%H%M%S`_${t}mm
@@ -48,7 +50,7 @@ do
   $PATH_TO_LSDYNA$NAME_OF_EXEC I\=$DYNA_I O\=$DYNA_O
   `dirname $0`/secf2csv.sh secforc
   cd -
-  echo $YmdHMS \($KEYWORD_FILENAME\) done at `date` | tee -a $PATH_TO_KEYFILE/autolog.txt
+  echo $YmdHMS \($KEYWORD_FILENAME\) done at `date` | tee -a $PATH_TO_KEYFILE/$LOG_FILENAME
 done
 fi
 
