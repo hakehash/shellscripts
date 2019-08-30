@@ -7,11 +7,12 @@ use Math::Trig;
 
 my $a = 3160;
 my $b = 880;
-my $x;
-my $y;
+my $nid =$ARGV[0];
+my $x = $ARGV[1];
+my $y = $ARGV[2];
+my $w0max = $ARGV[3];
 my $m;
 my $sum = 0;
-my $w0max = $ARGV[0];
 
 my @A;
 $A[1] = 1.1458;
@@ -27,8 +28,9 @@ $A[10] = -0.0015;
 $A[11] = -0.0074;
 
 for ($m = 1; $m < 12; $m++){
-  $sum += $A[$m] * sin(1 * pi * $x / $a) * sin(pi * $y / $b);
+  $sum += $A[$m] * sin($m * pi * $x / $a) * sin(pi * $y / $b);
 }
 
 my $w0 = $w0max * abs( $sum );
 
+printf "%8d%16f%16f%16f%8d%8d\n",$nid,$x,$y,$w0,0,0;
