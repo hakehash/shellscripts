@@ -5,13 +5,12 @@ use strict;
 use warnings;
 use Math::Trig;
 
-my $a = 3160;
+my $l = 3160;
 my $b = 880;
 my $nid =$ARGV[0];
 my $x = $ARGV[1];
 my $y = $ARGV[2];
 my $w0max = $ARGV[3];
-my $m;
 my $sum = 0;
 
 my @A;
@@ -27,8 +26,8 @@ $A[9] = 0.0;
 $A[10] = -0.0015;
 $A[11] = -0.0074;
 
-for ($m = 1; $m < 12; $m++){
-  $sum += $A[$m] * sin($m * pi * $x / $a) * sin(pi * $y / $b);
+for (my $m = 1; $m < 12; $m++){
+  $sum += $A[$m] * sin($m * pi * $x / $l) * sin(pi * $y / $b);
 }
 
 my $w0 = $w0max * abs( $sum );
