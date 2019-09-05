@@ -4,9 +4,11 @@ use utf8;
 use strict;
 use warnings;
 use Math::Trig;
+use File::Basename;
 
 if($#ARGV < 3){
-  print STDERR "usage: hhorse.pl nid x y w0max\n"
+  my $basename = basename $0;
+  print STDERR "usage:\t$basename nid x y w0max\n"
 } else {
 
   my $l = 3160;
