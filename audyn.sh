@@ -11,9 +11,9 @@ KEYWORD_FILENAME=`basename $1`.dyn
 LOG_FILENAME=autolog.txt
 #NR_m=`grep \*SECTION_SHELL_TITLE $1 -A4 -n | grep wall$ | sed -e 's/-.*//g'`
 #NR_s=`grep \*SECTION_SHELL_TITLE $1 -A4 -n | grep wall_side | sed -e 's/-.*//g'`
-NR_p=`grep \*SECTION_SHELL_TITLE $1 -A4 -n | grep plate$ | sed -e 's/-.*//g'`
+NR_p=`grep \*SECTION_SHELL_TITLE $1 -A4 -n | grep plate$ | sed 's/-.*//g'`
 touch $LOG_FILENAME
-for t in `seq 10 5 35`
+for t in `seq 50 50 100`
 do
   #YmdHMS=`date +%Y%m%dT%H%M%S`_${t}mm
   YmdHMS=${KEYWORD_FILENAME}_t${t}mm
@@ -41,11 +41,11 @@ do
     }' > $DYNA_I
   fi
   if [ `uname -r | grep Microsoft` ]; then
-    DYNA_I=`echo $DYNA_I | sed  -e 's/\/mnt\/f/F:/' | sed -e 's/\//\\\\\\\\/g'`
-    DYNA_O=`echo $DYNA_O | sed  -e 's/\/mnt\/f/F:/' | sed -e 's/\//\\\\\\\\/g'`
+    DYNA_I=`echo $DYNA_I | sed 's/\/mnt\/f/F:/' | sed 's/\//\\\\\\\\/g'`
+    DYNA_O=`echo $DYNA_O | sed 's/\/mnt\/f/F:/' | sed 's/\//\\\\\\\\/g'`
   elif [ `uname -a | grep Cygwin` ]; then
-    DYNA_I=`echo $DYNA_I | sed  -e 's/\/cygdrive\/f/F:/' | sed -e 's/\//\\\\\\\\/g'`
-    DYNA_O=`echo $DYNA_O | sed  -e 's/\/cygdrive\/f/F:/' | sed -e 's/\//\\\\\\\\/g'`
+    DYNA_I=`echo $DYNA_I | sed 's/\/cygdrive\/f/F:/' | sed 's/\//\\\\\\\\/g'`
+    DYNA_O=`echo $DYNA_O | sed 's/\/cygdrive\/f/F:/' | sed 's/\//\\\\\\\\/g'`
   fi
   cd $PATH_TO_KEYFILE/${YmdHMS}
   $PATH_TO_LSDYNA$NAME_OF_EXEC I\=$DYNA_I O\=$DYNA_O
