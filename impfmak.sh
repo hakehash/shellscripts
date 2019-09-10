@@ -25,13 +25,13 @@ else
 
   NR_NODE=`awk '/^\*NODE$/{print NR}' $DYNFILE`
   NR_NEXT=`awk '/^\*/{print NR}' $DYNFILE | grep -A1 ^${NR_NODE}$ | grep -v ^${NR_NODE}$`
-  DIRNAME=`dirname $0`
+  PATH_TO_SCRIPTS=`dirname $0`
 
   if [ $HORSE -ne 0 ]; then
     cat $DYNFILE | \
       awk '{
         if (NR > '$NR_NODE' && NR < '$NR_NEXT' && $4==0){
-          system("'$DIRNAME'/hhorse.pl "sprintf("%d %f %f %f %f",$1,$2,$3,$4,'$w0max'))
+          system("'$PATH_TO_SCRIPTS'/hhorse.pl "sprintf("%d %f %f %f %f",$1,$2,$3,$4,'$w0max'))
         }
         else print$0
       }'
