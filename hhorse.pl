@@ -6,9 +6,9 @@ use warnings;
 use Math::Trig;
 use File::Basename;
 
-if($#ARGV < 3){
+if($#ARGV < 4){
   my $basename = basename $0;
-  print STDERR "usage:\t$basename nid x y w0max\n"
+  print STDERR "usage:\t$basename nid x y z w0max\n"
 } else {
 
   my $l = 3160;
@@ -16,7 +16,8 @@ if($#ARGV < 3){
   my $nid =$ARGV[0];
   my $x = $ARGV[1];
   my $y = $ARGV[2];
-  my $w0max = $ARGV[3];
+  my $z = $ARGV[3];
+  my $w0max = $ARGV[4];
   my $sum = 0;
 
   my @A;
@@ -36,7 +37,7 @@ if($#ARGV < 3){
     $sum += $A[$m] * sin($m * pi * $x / $l) * sin(pi * $y / $b);
   }
 
-  my $w0 = $w0max * abs( $sum );
+  my $w0 = $z + $w0max * abs( $sum );
 
   printf "%8d%16f%16f%16f%8d%8d\n",$nid,$x,$y,$w0,0,0;
 }
