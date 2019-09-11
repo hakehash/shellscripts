@@ -7,7 +7,7 @@ PATH_TO_LSDYNA=/mnt/c/LSDYNA/program/
 NAME_OF_EXEC=ls-dyna_smp_s_R901_winx64_ifort131.exe
 PATH_TO_SCRIPTS=`dirname $0`
 PATH_TO_KEYFILE=`dirname $1`
-KEYWORD_FILENAME=`basename $1 .dyn`
+ORIG_FILENAME=`basename $1 .dyn`
 LOG_FILENAME=autolog.txt
 #NR_m=`grep \*SECTION_SHELL_TITLE $1 -A4 -n | grep wall$ | sed -e 's/-.*//g'`
 #NR_s=`grep \*SECTION_SHELL_TITLE $1 -A4 -n | grep wall_side | sed -e 's/-.*//g'`
@@ -15,11 +15,11 @@ NR_p=`grep \*SECTION_SHELL_TITLE $1 -A4 -n | grep plate$ | sed 's/-.*//g'`
 touch $LOG_FILENAME
 for t in `seq 50 50 100`
 do
-  #YmdHMS=`date +%Y%m%dT%H%M%S`_${t}mm
-  YmdHMS=${KEYWORD_FILENAME}_t${t}mm
-  mkdir $PATH_TO_KEYFILE/${YmdHMS}
-  DYNA_I=$PATH_TO_KEYFILE/${YmdHMS}/${YmdHMS}.dyn
-  DYNA_O=$PATH_TO_KEYFILE/${YmdHMS}/d3hsp
+  #MOD_FILENAME=`date +%Y%m%dT%H%M%S`_${t}mm
+  MOD_FILENAME=${ORIG_FILENAME}_t${t}mm
+  mkdir $PATH_TO_KEYFILE/${MOD_FILENAME}
+  DYNA_I=$PATH_TO_KEYFILE/${MOD_FILENAME}/${MOD_FILENAME}.dyn
+  DYNA_O=$PATH_TO_KEYFILE/${MOD_FILENAME}/d3hsp
   if [ -n "$NR_s" ]; then
     cat $1 | \
     awk '{
@@ -47,11 +47,12 @@ do
     DYNA_I=`echo $DYNA_I | sed 's/\/cygdrive\/f/F:/' | sed 's/\//\\\\\\\\/g'`
     DYNA_O=`echo $DYNA_O | sed 's/\/cygdrive\/f/F:/' | sed 's/\//\\\\\\\\/g'`
   fi
-  cd $PATH_TO_KEYFILE/${YmdHMS}
+  echo $MOD_FILENAME \($ORIG_FILENAME\) start at `date` | tee -a $PATH_TO_KEYFILE/$LOG_FILENAME 1>&2
+  cd $PATH_TO_KEYFILE/${MOD_FILENAME}
   $PATH_TO_LSDYNA$NAME_OF_EXEC I\=$DYNA_I O\=$DYNA_O
   $PATH_TO_SCRIPTS/secf2csv.sh secforc
   cd -
-  echo $YmdHMS \($KEYWORD_FILENAME\) done at `date` | tee -a $PATH_TO_KEYFILE/$LOG_FILENAME 1>&2
+  echo $MOD_FILENAME \($ORIG_FILENAME\) done at `date` | tee -a $PATH_TO_KEYFILE/$LOG_FILENAME 1>&2
 done
 fi
 
