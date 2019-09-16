@@ -1,6 +1,11 @@
 #!/bin/sh
 
 IsLaTeX=0
+usage () {
+  echo "usage:\t`basename $0` file | groff -ms -Tpdf > output.pdf" 1>&2
+  echo "\t\tor" 1>&2
+  echo "\tcat file | `basename $0` -l > output.tex" 1>&2
+}
 if [ -p /dev/stdin ]; then
   cat - > .tmp_dyn2roff
   DYNFILE=.tmp_dyn2roff
@@ -11,10 +16,6 @@ if [ -p /dev/stdin ]; then
         ;;
     esac
   done
-elif [ $# -eq 0 ]; then
-  echo "usage:\t`basename $0` file | groff -ms -Tpdf > output.pdf" 1>&2
-  echo "\t\tor" 1>&2
-  echo "\tcat file | `basename $0` -l > output.tex" 1>&2
 else
   while [ $# -ne 0 ]; do
     if [ -f $1 ]; then
@@ -45,6 +46,8 @@ if [ "$DYNFILE" ]; then
   if [ "$IsLaTeX" -ne 0 ]; then
     echo "\\\\end{verbatim}"
   fi
+else
+  usage
 fi
 if [ -w .tmp_dyn2roff ]; then
   rm .tmp_dyn2roff
