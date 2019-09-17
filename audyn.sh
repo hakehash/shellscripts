@@ -9,9 +9,7 @@ PATH_TO_SCRIPTS=`dirname $0`
 PATH_TO_KEYFILE=`dirname $1`
 ORIG_FILENAME=`basename $1 .dyn`
 LOG_FILENAME=autolog.txt
-#NR_m=`grep \*SECTION_SHELL_TITLE $1 -A4 -n | grep wall$ | sed -e 's/-.*//g'`
-#NR_s=`grep \*SECTION_SHELL_TITLE $1 -A4 -n | grep wall_side | sed -e 's/-.*//g'`
-NR_p=`grep \*SECTION_SHELL_TITLE $1 -A4 -n | grep plate$ | sed 's/-.*//g'`
+NR_plate=`grep \*SECTION_SHELL_TITLE $1 -A4 -n | grep plate$ | sed 's/[:-].*//g'`
 touch $LOG_FILENAME
 for t in `seq 50 50 100`
 do
@@ -19,7 +17,8 @@ do
   MOD_FILENAME=${ORIG_FILENAME}_t${t}mm
   mkdir $PATH_TO_KEYFILE/${MOD_FILENAME}
   DYNA_I=$PATH_TO_KEYFILE/${MOD_FILENAME}/${MOD_FILENAME}.dyn
-  DYNA_O=$PATH_TO_KEYFILE/${MOD_FILENAME}/d3hsp
+  #DYNA_O=$PATH_TO_KEYFILE/${MOD_FILENAME}/d3hsp
+  DYNA_O=`dirname $DYNA_I`/d3hsp
   if [ -n "$NR_s" ]; then
     cat $1 | \
     awk '{
@@ -36,7 +35,7 @@ do
   else
     cat $1 | \
     awk '{
-      if(NR=='$NR_p+4') printf "%10.1f%10.1f%10.1f%10.1f%10.1f%10.1f%10.1f%10d\n",'$t','$t','$t','$t',0,0,0,0
+      if(NR=='$NR_plate+4') printf "%10.1f%10.1f%10.1f%10.1f%10.1f%10.1f%10.1f%10d\n",'$t','$t','$t','$t',0,0,0,0
       else print$0
     }' > $DYNA_I
   fi
@@ -47,12 +46,13 @@ do
     DYNA_I=`echo $DYNA_I | sed 's/\/cygdrive\/f/F:/' | sed 's/\//\\\\\\\\/g'`
     DYNA_O=`echo $DYNA_O | sed 's/\/cygdrive\/f/F:/' | sed 's/\//\\\\\\\\/g'`
   fi
-  echo $MOD_FILENAME \($ORIG_FILENAME\) start at `date` | tee -a $PATH_TO_KEYFILE/$LOG_FILENAME 1>&2
-  cd $PATH_TO_KEYFILE/${MOD_FILENAME}
+  echo $MOD_FILENAME \($ORIG_FILENAME\) started at `date` | tee -a $PATH_TO_KEYFILE/$LOG_FILENAME 1>&2
+  #cd $PATH_TO_KEYFILE/${MOD_FILENAME}
+  cd `dirname $DYNA_I`
   $PATH_TO_LSDYNA$NAME_OF_EXEC I\=$DYNA_I O\=$DYNA_O
   $PATH_TO_SCRIPTS/secf2csv.sh secforc
   cd -
-  echo $MOD_FILENAME \($ORIG_FILENAME\) done at `date` | tee -a $PATH_TO_KEYFILE/$LOG_FILENAME 1>&2
+  echo $MOD_FILENAME \($ORIG_FILENAME\) terminated at `date` | tee -a $PATH_TO_KEYFILE/$LOG_FILENAME 1>&2
 done
 fi
 
