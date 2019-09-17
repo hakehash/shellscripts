@@ -39,6 +39,7 @@ do
       else print$0
     }' > $DYNA_I
   fi
+  cd `dirname $DYNA_I`
   if [ `uname -r | grep Microsoft` ]; then
     DYNA_I=`echo $DYNA_I | sed 's/\/mnt\/f/F:/' | sed 's/\//\\\\\\\\/g'`
     DYNA_O=`echo $DYNA_O | sed 's/\/mnt\/f/F:/' | sed 's/\//\\\\\\\\/g'`
@@ -48,7 +49,6 @@ do
   fi
   echo $MOD_FILENAME \($ORIG_FILENAME\) started at `date` | tee -a $PATH_TO_KEYFILE/$LOG_FILENAME 1>&2
   #cd $PATH_TO_KEYFILE/${MOD_FILENAME}
-  cd `dirname $DYNA_I`
   $PATH_TO_LSDYNA$NAME_OF_EXEC I\=$DYNA_I O\=$DYNA_O
   $PATH_TO_SCRIPTS/secf2csv.sh secforc
   cd -
