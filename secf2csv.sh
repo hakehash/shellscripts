@@ -14,7 +14,7 @@ else
   done
   ORIG=`cat $SECFORC | grep line -n | tail -n1 | sed 's/:.*//g'`
   AREA=`cat $SECFORC | awk 'NR=='$ORIG'+3{print $4}'`
-  cat $SECFORC | awk '(NR-'$ORIG')%4==1{if($1==1) print $2/'$LENGTH' "," $3/'$AREA'}' > ${SECFORC}-X.csv
-  cat $SECFORC | awk '(NR-'$ORIG')%4==1{if($1==2) print $2/'$LENGTH' "," $4/124510}' > ${SECFORC}-Y.csv
+  cat $SECFORC | awk '(NR-'$ORIG')%4==1{if($1==1) print $2/'$LENGTH' "," $3/'$AREA'}' > ${SECFORC}.csv
+  #cat $SECFORC | awk '(NR-'$ORIG')%4==1{if($1==2) print $2/'$LENGTH' "," $4/124510}' > ${SECFORC}-Y.csv
 fi
 
