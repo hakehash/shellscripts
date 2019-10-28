@@ -30,21 +30,28 @@ do
     if [ -n "$NR_s" ]; then
       cat $1 | \
       awk '{
-        if(NR=='$NR_s+4') printf "%10.1f%10.1f%10.1f%10.1f%10.1f%10.1f%10.1f%10d\n",'$t/2','$t/2','$t/2','$t/2',0,0,0,0
-        else if(NR=='$NR_m+4') printf "%10.1f%10.1f%10.1f%10.1f%10.1f%10.1f%10.1f%10d\n",'$t','$t','$t','$t',0,0,0,0
-        else print$0
+        if(NR=='$NR_s+4')
+          printf "%10.1f%10.1f%10.1f%10.1f%10.1f%10.1f%10.1f%10d\n",'$t/2','$t/2','$t/2','$t/2',0,0,0,0
+        else if(NR=='$NR_m+4')
+          printf "%10.1f%10.1f%10.1f%10.1f%10.1f%10.1f%10.1f%10d\n",'$t','$t','$t','$t',0,0,0,0
+        else
+          print$0
       }' > $DYNA_I
     elif [ -n "$NR_m" ]; then
       cat $1 | \
       awk '{
-        if(NR=='$NR_m+4') printf "%10.1f%10.1f%10.1f%10.1f%10.1f%10.1f%10.1f%10d\n",'$t','$t','$t','$t',0,0,0,0
-        else print$0
+        if(NR=='$NR_m+4')
+          printf "%10.1f%10.1f%10.1f%10.1f%10.1f%10.1f%10.1f%10d\n",'$t','$t','$t','$t',0,0,0,0
+        else
+          print$0
       }' > $DYNA_I
     else
       cat $1 | \
       awk '{
-        if(NR=='$NR_plate+4') printf "%10.1f%10.1f%10.1f%10.1f%10.1f%10.1f%10.1f%10d\n",'$t','$t','$t','$t',0,0,0,0
-        else print$0
+        if(NR=='$NR_plate+4')
+          printf "%10.1f%10.1f%10.1f%10.1f%10.1f%10.1f%10.1f%10d\n",'$t','$t','$t','$t',0,0,0,0
+        else
+          print$0
       }' > $DYNA_I
     fi
 
@@ -65,7 +72,8 @@ do
     $PATH_TO_LSDYNA$NAME_OF_EXEC I\=$DYNA_I O\=$DYNA_O
     $PATH_TO_SCRIPTS/secf2csv.sh secforc $3
     cd -
-    echo $MOD_FILENAME \($ORIG_FILENAME\) terminated at `date` | tee -a $PATH_TO_KEYFILE/$LOG_FILENAME 1>&2
+    echo $MOD_FILENAME \($ORIG_FILENAME\) terminated at `date` |\
+      tee -a $PATH_TO_KEYFILE/$LOG_FILENAME 1>&2
   done
 done
 fi
