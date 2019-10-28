@@ -31,9 +31,11 @@ do
       cat $1 | \
       awk '{
         if(NR=='$NR_s+4')
-          printf "%10.1f%10.1f%10.1f%10.1f%10.1f%10.1f%10.1f%10d\n",'$t/2','$t/2','$t/2','$t/2',0,0,0,0
+          printf "%10.1f%10.1f%10.1f%10.1f%10.1f%10.1f%10.1f%10d\n",
+          '$t/2','$t/2','$t/2','$t/2',0,0,0,0
         else if(NR=='$NR_m+4')
-          printf "%10.1f%10.1f%10.1f%10.1f%10.1f%10.1f%10.1f%10d\n",'$t','$t','$t','$t',0,0,0,0
+          printf "%10.1f%10.1f%10.1f%10.1f%10.1f%10.1f%10.1f%10d\n",
+          '$t','$t','$t','$t',0,0,0,0
         else
           print$0
       }' > $DYNA_I
@@ -41,7 +43,8 @@ do
       cat $1 | \
       awk '{
         if(NR=='$NR_m+4')
-          printf "%10.1f%10.1f%10.1f%10.1f%10.1f%10.1f%10.1f%10d\n",'$t','$t','$t','$t',0,0,0,0
+          printf "%10.1f%10.1f%10.1f%10.1f%10.1f%10.1f%10.1f%10d\n",
+          '$t','$t','$t','$t',0,0,0,0
         else
           print$0
       }' > $DYNA_I
@@ -49,7 +52,8 @@ do
       cat $1 | \
       awk '{
         if(NR=='$NR_plate+4')
-          printf "%10.1f%10.1f%10.1f%10.1f%10.1f%10.1f%10.1f%10d\n",'$t','$t','$t','$t',0,0,0,0
+          printf "%10.1f%10.1f%10.1f%10.1f%10.1f%10.1f%10.1f%10d\n",
+          '$t','$t','$t','$t',0,0,0,0
         else
           print$0
       }' > $DYNA_I
@@ -60,7 +64,8 @@ do
     rm tmp.dyn
 
     #cd $PATH_TO_KEYFILE/${MOD_FILENAME}
-    echo $MOD_FILENAME \($ORIG_FILENAME\) started at `date` | tee -a $PATH_TO_KEYFILE/$LOG_FILENAME 1>&2
+    echo $MOD_FILENAME \($ORIG_FILENAME\) started at `date` |\
+      tee -a $PATH_TO_KEYFILE/$LOG_FILENAME 1>&2
     cd `dirname $DYNA_I`
     if [ `uname -r | grep Microsoft` ]; then
       DYNA_I=`echo $DYNA_I | sed 's/\/mnt\/f/F:/' | sed 's/\//\\\\\\\\/g'`
