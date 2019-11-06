@@ -10,7 +10,7 @@ PATH_TO_KEYFILE=`dirname $1`
 ORIG_FILENAME=`basename $1 .dyn`
 LOG_FILENAME=autolog.txt
 NR_plate=`grep \*SECTION_SHELL_TITLE $1 -A4 -n | grep plate$ | sed 's/[:-].*//g'`
-touch $LOG_FILENAME
+touch $PATH_TO_KEYFILE/$LOG_FILENAME
 t_MIN=24
 t_STEP=5
 t_MAX=24
