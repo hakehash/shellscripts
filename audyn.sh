@@ -17,11 +17,12 @@ t_MAX=24
 for t in `seq $t_MIN $t_STEP $t_MAX`
 do
   BETA=`echo $t | awk '{print 880/$1*sqrt(313.6/205800)}'`
-  w0_SLIGHT=`echo 0.025 | awk '{print $1*'$BETA'*'$BETA'*'$t'}'`
-  w0_AVERAGE=`echo 0.1 | awk '{print $1*'$BETA'*'$BETA'*'$t'}'`
-  w0_SEVERE=`echo 0.3 | awk '{print $1*'$BETA'*'$BETA'*'$t'}'`
-  for w0 in $w0_SLIGHT $w0_AVERAGE $w0_SEVERE
-  do
+  w0=`echo 0.05 | awk '{print $1*'$BETA'*'$BETA'*'$t'}'`
+#  w0_SLIGHT=`echo 0.025 | awk '{print $1*'$BETA'*'$BETA'*'$t'}'`
+#  w0_AVERAGE=`echo 0.1 | awk '{print $1*'$BETA'*'$BETA'*'$t'}'`
+#  w0_SEVERE=`echo 0.3 | awk '{print $1*'$BETA'*'$BETA'*'$t'}'`
+#  for w0 in $w0_SLIGHT $w0_AVERAGE $w0_SEVERE
+#  do
     MOD_FILENAME=${ORIG_FILENAME}_t${t}mm_w${w0}mm_$2
     mkdir $PATH_TO_KEYFILE/${MOD_FILENAME}
     DYNA_I=$PATH_TO_KEYFILE/${MOD_FILENAME}/${MOD_FILENAME}.dyn
@@ -79,7 +80,7 @@ do
     cd -
     echo $MOD_FILENAME \($ORIG_FILENAME\) terminated at `date` |\
       tee -a $PATH_TO_KEYFILE/$LOG_FILENAME 1>&2
-  done
+  #done
 done
 fi
 
