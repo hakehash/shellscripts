@@ -18,7 +18,7 @@ if($#ARGV < 4){
   my $y = $ARGV[2];
   my $z = $ARGV[3];
   my $w0max = $ARGV[4];
-  my $m = 3;
+  my $m = 4;
 
   my $wpl = $z + $w0max * sin($m * pi * $x / $a) * sin(pi * $y / $b);
 
