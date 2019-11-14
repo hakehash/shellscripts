@@ -33,7 +33,6 @@ if [ "$DYNFILE" ]; then
   NR_ND=`awk '/^\*NODE/{print NR}' $DYNFILE`
   NR_SS=`awk '/^\*/{print NR}' $DYNFILE | grep -A1 ^$NR_ND$ | grep -v ^$NR_ND$`
   OMITT=---------------------------------------\>8---------------------------------------
-  echo $NR_ES
   if [ $NR_ES -gt $NR_ND ]; then
     _TEMP=$NR_ES
     NR_ES=$NR_ND
