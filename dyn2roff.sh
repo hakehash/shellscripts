@@ -49,8 +49,8 @@ if [ "$DYNFILE" ]; then
   cat $DYNFILE | \
     sed `expr $NR_ES + 1`,`expr $NR_EE - 1`d | \
     sed `expr $NR_ND - \( $NR_EE - $NR_ES \) + 2`,`expr $NR_ES - $NR_EE + $NR_SS`d | \
-    sed "s/^\*ELEMENT_SHELL$/&\n$OMITT/" | \
-    sed "s/^\*NODE$/&\n$OMITT/"
+    sed "s/^\*ELEMENT_SHELL/&\n$OMITT/" | \
+    sed "s/^\*NODE/&\n$OMITT/"
   if [ "$IsLaTeX" -ne 0 ]; then
     echo "\\\\end{verbatim}"
   fi
