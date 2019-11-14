@@ -28,12 +28,21 @@ else
   done
 fi
 if [ "$DYNFILE" ]; then
-  NR_ES=`awk '/^\*ELEMENT_SHELL$/{print NR}' $DYNFILE`
+  NR_ES=`awk '/^\*ELEMENT_SHELL/{print NR}' $DYNFILE`
   NR_EE=`awk '/^\*/{print NR}' $DYNFILE | grep -A1 ^$NR_ES$ | grep -v ^$NR_ES$`
-  NR_ND=`awk '/^\*NODE$/{print NR}' $DYNFILE`
+  NR_ND=`awk '/^\*NODE/{print NR}' $DYNFILE`
   NR_SS=`awk '/^\*/{print NR}' $DYNFILE | grep -A1 ^$NR_ND$ | grep -v ^$NR_ND$`
   OMITT=---------------------------------------\>8---------------------------------------
-  if [ "$IsLaTeX" -ne 0 ]; then
+  echo $NR_ES
+  if [ $NR_ES -gt $NR_ND ]; then
+    _TEMP=$NR_ES
+    NR_ES=$NR_ND
+    NR_ND=$_TEMP
+    _TEMP=$NR_EE
+    NR_EE=$NR_SS
+    NR_SS=$_TEMP
+  fi
+  if [ $IsLaTeX -ne 0 ]; then
     echo "\\\\begin{verbatim}"
   else
     echo ".ft C\n.nf"
