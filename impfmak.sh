@@ -32,7 +32,7 @@ else
         if (NR > '$NR_NODE' && NR < '$NR_NEXT' && $4==0){
           system("'$PATH_TO_SCRIPTS'/hhorse.pl "sprintf("%d %f %f %f %f",$1,$2,$3,$4,'$w0max'))
         }
-        else print$0
+        else print $0
       }'
   fi
 
@@ -42,7 +42,7 @@ else
         if (NR > '$NR_NODE' && NR < '$NR_NEXT' && $4==0){
           system("'$PATH_TO_SCRIPTS'/local.pl "sprintf("%d %f %f %f %f",$1,$2,$3,$4,'$w0max'))
         }
-        else print$0
+        else print $0
       }'
   fi
 fi
