@@ -27,7 +27,7 @@ cat $DYNFILE |\
   '$2==xmin { print $1 > nodes_id_list_min.tmp }
    $2==xmax { print $1 > nodes_id_list_max.tmp }'
 
-DOF=3
+for DOF in 2 3 5 6
 paste nodes_id_list_min.tmp nodes_id_list_max.tmp |\
   awk '{
   printf("*CONSTRAINED_LINEAR_GLOBAL\n%10d\n%10d%10d%10.1f\n%10d%10d%10.1f\n",
