@@ -20,8 +20,15 @@ getxmax(){
 X_MIN=`getxmin`
 X_MAX=`getxmax`
 
-echo $X_MIN
-echo $X_MAX
+cat $DYNFILE |\
+  awk '{if(NR > '$NR_NODE' && NR < '$NR_NEXT'){ print $0 }}' |\
+  grep -v \\$ | sort -n -k 2 |\
+  awk -v "xmin=$X_MIN" -v "xmax=$X_MAX"
+  '$2==xmin { print $1 > nodes_id_list_min.tmp }
+   $2==xmax { print $1 > nodes_id_list_max.tmp }'
 
-#cat $DYNFILE | awk '{if(NR > '$NR_NODE' && NR < '$NR_NEXT'){ print $0 }}' | grep -v \\$ | sort -n -k 2
-
+DOF=3
+paste nodes_id_list_min.tmp nodes_id_list_max.tmp |\
+  awk '{
+  printf("*CONSTRAINED_LINEAR_GLOBAL\n%10d\n%10d%10d%10.1f\n%10d%10d%10.1f\n",
+  '$DOF'*1000+NR,$1,'$DOF',-1,$2,'$DOF',1)}'
