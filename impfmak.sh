@@ -30,8 +30,7 @@ else
     cat $DYNFILE | \
       awk '{
         if (NR > '$NR_NODE' && NR < '$NR_NEXT' && $4==0) {
-          system("'$PATH_TO_SCRIPTS'/hhorse.pl "
-          sprintf("%d %f %f %f %f",$1,$2,$3,$4,$5,$6'$w0max'))
+          system("'$PATH_TO_SCRIPTS'/hhorse.pl "sprintf("%d %f %f %f %d %d %f",$1,$2,$3,$4,$5,$6,'$w0max'))
         }
         else print $0
       }'
@@ -41,8 +40,7 @@ else
     cat $DYNFILE | \
       awk '{
         if (NR > '$NR_NODE' && NR < '$NR_NEXT' && $4==0){
-          system("'$PATH_TO_SCRIPTS'/local.pl "
-          sprintf("%d %f %f %f %f",$1,$2,$3,$4,$5,$6'$w0max'))
+          system("'$PATH_TO_SCRIPTS'/local.pl "sprintf("%d %f %f %f %d %d %f",$1,$2,$3,$4,$5,$6,'$w0max'))
         }
         else print $0
       }'

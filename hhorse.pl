@@ -8,7 +8,7 @@ use File::Basename;
 
 if($#ARGV < 4){
   my $basename = basename $0;
-  print STDERR "usage:\t$basename nid x y z w0max\n"
+  print STDERR "usage:\t$basename nid x y z tc rc w0max\n"
 } else {
 
   my $l = 3160;
@@ -17,9 +17,9 @@ if($#ARGV < 4){
   my $x = $ARGV[1];
   my $y = $ARGV[2];
   my $z = $ARGV[3];
-  my $w0max = $ARGV[4];
-  my $tc = $ARGV[5];
-  my $rc = $ARGV[6];
+  my $tc = $ARGV[4];
+  my $rc = $ARGV[5];
+  my $w0max = $ARGV[6];
   my $sum = 0;
 
   my @A;
