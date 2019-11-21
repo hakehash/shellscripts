@@ -18,6 +18,8 @@ if($#ARGV < 4){
   my $y = $ARGV[2];
   my $z = $ARGV[3];
   my $w0max = $ARGV[4];
+  my $tc = $ARGV[5];
+  my $rc = $ARGV[6];
   my $sum = 0;
 
   my @A;
@@ -39,5 +41,5 @@ if($#ARGV < 4){
 
   my $w0 = $z + $w0max * abs( $sum );
 
-  printf "%8d%16f%16f%16f%8d%8d\n",$nid,$x,$y,$w0,0,0;
+  printf "%8d%16f%16f%16f%8d%8d\n",$nid,$x,$y,$w0,$tc,$rc;
 }
