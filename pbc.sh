@@ -28,7 +28,7 @@ else
     grep -v \\$ | sort -n -k 2 |\
     awk -v "xmin=$X_MIN" -v "xmax=$X_MAX" \
     '$2==xmin { print $1 > "nodes_id_list_min.tmp" }
-    $2==xmax { print $1 > "nodes_id_list_max.tmp" }'
+     $2==xmax { print $1 > "nodes_id_list_max.tmp" }'
 
   DOF=1
   cat nodes_id_list_min.tmp |\
