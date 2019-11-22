@@ -10,7 +10,6 @@ if($#ARGV < 6){
   my $basename = basename $0;
   print STDERR "usage:\t$basename nid x y z tc rc w0max\n";
 } else {
-
   my $a = 3160;
   my $b = 880;
   my $nid =$ARGV[0];
@@ -22,6 +21,9 @@ if($#ARGV < 6){
   my $w0max = $ARGV[6];
   my $m = 4;
 
+  if($x < $a || 2*$a < $x){
+    $w0max -= 0.02;
+  }
   my $wpl = $z + $w0max * sin($m * pi * $x / $a) * sin(pi * $y / $b);
   printf "%8d%16f%16f%16f%8d%8d\n",$nid,$x,$y,$wpl,$tc,$rc;
 }
