@@ -6,9 +6,9 @@ use warnings;
 use Math::Trig;
 use File::Basename;
 
-if($#ARGV < 4){
+if($#ARGV < 6){
   my $basename = basename $0;
-  print STDERR "usage:\t$basename nid x y z tc rc w0max\n"
+  print STDERR "usage:\t$basename nid x y z tc rc w0max\n";
 } else {
 
   my $a = 3160;
@@ -23,6 +23,5 @@ if($#ARGV < 4){
   my $m = 4;
 
   my $wpl = $z + $w0max * sin($m * pi * $x / $a) * sin(pi * $y / $b);
-
   printf "%8d%16f%16f%16f%8d%8d\n",$nid,$x,$y,$wpl,$tc,$rc;
 }
