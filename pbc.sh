@@ -6,7 +6,6 @@ else
   DYNFILE=$1
   NR_NODE=`awk '/^\*NODE$/{print NR}' $DYNFILE`
   NR_NEXT=`awk '/^\*/{print NR}' $DYNFILE | grep -A1 ^${NR_NODE}$ | grep -v ^${NR_NODE}$`
-  PATH_TO_SCRIPTS=`dirname $0`
 
   getxmin(){
     cat $DYNFILE |\
