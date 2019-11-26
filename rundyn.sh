@@ -10,7 +10,7 @@ LOG_FILENAME=autolog.txt
 while [ $# -ne 0 ]; do
   if [ -f $1 ]; then
     PATH_TO_KEYFILE=`dirname $1`
-    DYNA_I=$PATH_TO_KEYFILE/$1
+    DYNA_I=$1
     DYNA_O=`dirname $DYNA_I`/d3hsp
 
     cd `dirname $DYNA_I`
@@ -34,4 +34,4 @@ while [ $# -ne 0 ]; do
   fi
   shift
 done
-
+fi
