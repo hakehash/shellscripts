@@ -23,7 +23,8 @@ else
       grep -v \\$ | sort -n -k 2 | tail -n1 | awk '{printf("%d",$2)}'
   }
 
-  DYNFILE=`dirname $SECFORC`/*.dyn
+  DIRNAME=`dirname $SECFORC`
+  DYNFILE=$DIRNAME/*.dyn
   NR_NODE=`awk '/^\*NODE$/{print NR}' $DYNFILE`
   NR_NEXT=`awk '/^\*/{print NR}' $DYNFILE | grep -A1 "^${NR_NODE}$" | grep -v "^${NR_NODE}$"`
   X_MIN=`getxmin`
@@ -34,6 +35,6 @@ else
   AREA=`cat $SECFORC | awk 'NR=='$ORIG'+3{print $4}'`
   cat $SECFORC | \
     awk '(NR-'$ORIG')%4==1{if($1==1) print $2/'$LENGTH' "," $3/'$AREA'}' \
-    > ${SECFORC}.csv
+    > $DIRNAME/${SECFORC}.csv
 fi
 
