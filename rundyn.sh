@@ -27,7 +27,7 @@ while [ $# -ne 0 ]; do
     $PATH_TO_SCRIPTS/secf2csv.sh secforc
     echo terminated at `date` |\
       tee -a $PATH_TO_KEYFILE/$LOG_FILENAME 1>&2
-    cat secforc.csv | sort -t "," -r -n -k 2 | head -n1 |\
+    cat $PATH_TO_KEYFILE/secforc.csv | sort -t "," -r -n -k 2 | head -n1 |\
       tee -a $PATH_TO_KEYFILE/$LOG_FILENAME |\
       $PATH_TO_SCRIPTS/line_notify.sh
     cd -
