@@ -5,7 +5,7 @@ if [ $# -eq 0 ]; then
 else
 PATH_TO_LSDYNA=/mnt/c/LSDYNA/program/
 NAME_OF_EXEC=ls-dyna_smp_s_R901_winx64_ifort131.exe
-PATH_TO_SCRIPTS=`cd $(dirname $0) && pwd`
+PATH_TO_SCRIPTS=`cd $(dirname $0) && cd -`
 LOG_FILENAME=autolog.txt
 while [ $# -ne 0 ]; do
   if [ -f $1 ]; then
