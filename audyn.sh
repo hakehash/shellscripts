@@ -28,28 +28,7 @@ do
     mkdir $PATH_TO_KEYFILE/${MOD_FILENAME}
     DYNA_I=$PATH_TO_KEYFILE/${MOD_FILENAME}/${MOD_FILENAME}.dyn
     DYNA_O=`dirname $DYNA_I`/d3hsp
-    if [ -n "$NR_s" ]; then
-      cat $1 | \
-      awk '{
-        if(NR=='$NR_s+4')
-          printf "%10.1f%10.1f%10.1f%10.1f%10.1f%10.1f%10.1f%10d\n",
-          '$t/2','$t/2','$t/2','$t/2',0,0,0,0
-        else if(NR=='$NR_m+4')
-          printf "%10.1f%10.1f%10.1f%10.1f%10.1f%10.1f%10.1f%10d\n",
-          '$t','$t','$t','$t',0,0,0,0
-        else
-          print$0
-      }' > $DYNA_I
-    elif [ -n "$NR_m" ]; then
-      cat $1 | \
-      awk '{
-        if(NR=='$NR_m+4')
-          printf "%10.1f%10.1f%10.1f%10.1f%10.1f%10.1f%10.1f%10d\n",
-          '$t','$t','$t','$t',0,0,0,0
-        else
-          print$0
-      }' > $DYNA_I
-    else
+    if [ -n "$NR_plate" ]; then
       cat $1 | \
       awk '{
         if(NR=='$NR_plate+4')
