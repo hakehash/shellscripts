@@ -25,5 +25,5 @@ if($#ARGV < 6){
     $w0max -= 0.02;
   }
   my $wpl = $z + $w0max * sin($m * pi * $x / $a) * sin(pi * $y / $b);
-  printf "%8d%16f%16f%16f%8d%8d\n",$nid,$x,$y,$wpl,$tc,$rc;
+  printf "%8d%16G%16G%16G%8d%8d\n",$nid,$x,$y,$wpl,$tc,$rc;
 }

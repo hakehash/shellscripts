@@ -41,5 +41,5 @@ if($#ARGV < 4){
 
   my $w0 = $z + $w0max * abs( $sum );
 
-  printf "%8d%16f%16f%16f%8d%8d\n",$nid,$x,$y,$w0,$tc,$rc;
+  printf "%8d%16G%16G%16G%8d%8d\n",$nid,$x,$y,$w0,$tc,$rc;
 }
