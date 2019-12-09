@@ -37,7 +37,7 @@ do
     cat $1 | awk '/\*MAT_PLASTIC_KINEMATIC/{NR_MAT3=NR+2}
     {if(NR==NR_MAT3)
       printf "%10d%10G%10.1f%10.1f%10.2f%10.2f%10.1f\n",
-      $1,$2,$3,$4,$SIGY,$6,$7;
+      $1,$2,$3,$4,'$SIGY',$6,$7;
     else
       print $0}' > $DYNA_I
 
