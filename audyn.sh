@@ -24,7 +24,7 @@ do
 #  w0_AVERAGE=`echo 0.1 | awk '{print $1*'$BETA'*'$BETA'*'$t'}'`
 #  w0_SEVERE=`echo 0.3 | awk '{print $1*'$BETA'*'$BETA'*'$t'}'`
 #  for w0 in $w0_SLIGHT $w0_AVERAGE $w0_SEVERE
-  for NIP in `seq 3 10`
+  for NIP in 2 #`seq 3 10`
   do
     #MOD_FILENAME=${ORIG_FILENAME}_t${t}mm_w${w0}mm_$2
     MOD_FILENAME=${ORIG_FILENAME}_$NIP
@@ -43,12 +43,12 @@ do
       }' > $DYNA_I
     fi
 
-    cat $1 | awk '/\*SECTION_SHELL/{NR_SS=NR+3}
-    {if(NR==NR_SS)
-      printf "%10d%10d%10.1f%10d%10.1f%10d%10d%10d\n",
-      $1,$2,$3,'$NIP',$5,$6,$7,$8;
-    else
-      print $0}' > $DYNA_I
+    #cat $1 | awk '/\*SECTION_SHELL/{NR_SS=NR+3}
+    #{if(NR==NR_SS)
+      #printf "%10d%10d%10.1f%10d%10.1f%10d%10d%10d\n",
+      #$1,$2,$3,'$NIP',$5,$6,$7,$8;
+    #else
+      #print $0}' > $DYNA_I
 
     #$PATH_TO_SCRIPTS/impfmak.sh $DYNA_I $w0 -${2} > tmp.dyn
     #cat tmp.dyn > $DYNA_I
