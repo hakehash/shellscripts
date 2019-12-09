@@ -30,6 +30,9 @@ while [ $# -ne 0 ]; do
     cat $PATH_TO_KEYFILE/secforc.csv | sort -t "," -r -n -k 2 | head -n1 |\
       tee -a $PATH_TO_KEYFILE/$LOG_FILENAME |\
       $PATH_TO_SCRIPTS/line_notify.sh
+    gnuplot -p -e 'set terminal pngcairo; set output "a.png";
+      set monochrome; set xtics 0.001; unset key;
+      set datafile separator ","; plot "'$PATH_TO_KEYFILE'/secforc.csv" w l'
     cd -
   fi
   shift
