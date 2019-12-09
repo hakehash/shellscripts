@@ -34,7 +34,7 @@ do
     DYNA_I=$PATH_TO_KEYFILE/${MOD_FILENAME}/${MOD_FILENAME}.dyn
     DYNA_O=`dirname $DYNA_I`/d3hsp
 
-    cat $1 | awk '/\*SECTION_SHELL/{NR_SS=NR+3}
+    cat $1 | awk '/\*MAT_PLASTIC_KINEMATIC/{NR_SS=NR+3}
     {if(NR==NR_SS)
       printf "%10d%10G%10.1f%10.1f%10.2f%10.2f%10.1f\n",
       $1,$2,$3,$4,$SIGY,$6,$7;
