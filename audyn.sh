@@ -15,7 +15,8 @@ touch $PATH_TO_KEYFILE/$LOG_FILENAME
 t_MIN=24
 t_STEP=5
 t_MAX=24
-for t in `seq $t_MIN $t_STEP $t_MAX`
+#for t in `seq $t_MIN $t_STEP $t_MAX`
+for SIGY in `seq 309.23 9.09 418.31` #-3sigma to 3sigma
 do
   #BETA=`echo $t | awk '{print 880/$1*sqrt(313.6/205800)}'`
   #w0=2.46
@@ -27,21 +28,29 @@ do
   for NIP in 2 #`seq 3 10`
   do
     #MOD_FILENAME=${ORIG_FILENAME}_t${t}mm_w${w0}mm_$2
-    MOD_FILENAME=${ORIG_FILENAME}_$NIP
+    #MOD_FILENAME=${ORIG_FILENAME}_$NIP
+    MOD_FILENAME=${ORIG_FILENAME}_${SIGY}MPa
     mkdir $PATH_TO_KEYFILE/${MOD_FILENAME}
     DYNA_I=$PATH_TO_KEYFILE/${MOD_FILENAME}/${MOD_FILENAME}.dyn
     DYNA_O=`dirname $DYNA_I`/d3hsp
 
-    if [ -n "$NR_plate" ]; then
-      cat $1 | \
-      awk '{
-        if(NR=='$NR_plate+4')
-          printf "%10.1f%10.1f%10.1f%10.1f%10.1f%10.1f%10.1f%10d\n",
-          '$t','$t','$t','$t',0,0,0,0
-        else
-          print$0
-      }' > $DYNA_I
-    fi
+    cat $1 | awk '/\*SECTION_SHELL/{NR_SS=NR+3}
+    {if(NR==NR_SS)
+      printf "%10d%10G%10.1f%10.1f%10.2f%10.2f%10.1f\n",
+      $1,$2,$3,$4,$SIGY,$6,$7;
+    else
+      print $0}' > $DYNA_I
+
+    #if [ -n "$NR_plate" ]; then
+      #cat $1 | \
+      #awk '{
+        #if(NR=='$NR_plate+4')
+          #printf "%10.1f%10.1f%10.1f%10.1f%10.1f%10.1f%10.1f%10d\n",
+          #'$t','$t','$t','$t',0,0,0,0
+        #else
+          #print$0
+      #}' > $DYNA_I
+    #fi
 
     #cat $1 | awk '/\*SECTION_SHELL/{NR_SS=NR+3}
     #{if(NR==NR_SS)
