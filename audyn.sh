@@ -10,7 +10,7 @@ PATH_TO_KEYFILE=`dirname $1`
 ORIG_FILENAME=`basename $1 .dyn`
 LOG_FILENAME=autolog.txt
 #NR_plate=`grep \*SECTION_SHELL_TITLE $1 -A4 -n | grep plate$ | sed 's/[:-].*//g'`
-NR_SECTION_SHELL=`grep \*SECTION_SHELL $1 -n | sed 's/[:-].*//g'`
+#NR_SECTION_SHELL=`grep \*SECTION_SHELL $1 -n | sed 's/[:-].*//g'`
 touch $PATH_TO_KEYFILE/$LOG_FILENAME
 t_MIN=24
 t_STEP=5
@@ -34,8 +34,8 @@ do
     DYNA_I=$PATH_TO_KEYFILE/${MOD_FILENAME}/${MOD_FILENAME}.dyn
     DYNA_O=`dirname $DYNA_I`/d3hsp
 
-    cat $1 | awk '/\*MAT_PLASTIC_KINEMATIC/{NR_SS=NR+3}
-    {if(NR==NR_SS)
+    cat $1 | awk '/\*MAT_PLASTIC_KINEMATIC/{NR_MAT3=NR+2}
+    {if(NR==NR_MAT3)
       printf "%10d%10G%10.1f%10.1f%10.2f%10.2f%10.1f\n",
       $1,$2,$3,$4,$SIGY,$6,$7;
     else
