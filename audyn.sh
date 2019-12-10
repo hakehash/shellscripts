@@ -15,10 +15,10 @@ touch $PATH_TO_KEYFILE/$LOG_FILENAME
 t_MIN=24
 t_STEP=5
 t_MAX=24
-for t in `seq $t_MIN $t_STEP $t_MAX`
 #for SIGY in `seq 309.23 9.09 418.31` #-3sigma to 3sigma
-SIGY=313.6
+for t in `seq $t_MIN $t_STEP $t_MAX`
 do
+  SIGY=313.6
   BETA=`echo $t | awk '{print 880/$1*sqrt('$SIGY'/205800)}'`
   #w0=2.46
 #  w0_SLIGHT=`echo 0.025 | awk '{print $1*'$BETA'*'$BETA'*'$t'}'`
