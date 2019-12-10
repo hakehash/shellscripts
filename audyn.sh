@@ -15,31 +15,34 @@ touch $PATH_TO_KEYFILE/$LOG_FILENAME
 t_MIN=24
 t_STEP=5
 t_MAX=24
-#for t in `seq $t_MIN $t_STEP $t_MAX`
-for SIGY in `seq 309.23 9.09 418.31` #-3sigma to 3sigma
+for t in `seq $t_MIN $t_STEP $t_MAX`
+#for SIGY in `seq 309.23 9.09 418.31` #-3sigma to 3sigma
+SIGY=313.6
 do
-  #BETA=`echo $t | awk '{print 880/$1*sqrt(313.6/205800)}'`
+  BETA=`echo $t | awk '{print 880/$1*sqrt('$SIGY'/205800)}'`
   #w0=2.46
-#  w0=`echo 0.05 | awk '{print $1*'$BETA'*'$BETA'*'$t'}'`
 #  w0_SLIGHT=`echo 0.025 | awk '{print $1*'$BETA'*'$BETA'*'$t'}'`
 #  w0_AVERAGE=`echo 0.1 | awk '{print $1*'$BETA'*'$BETA'*'$t'}'`
 #  w0_SEVERE=`echo 0.3 | awk '{print $1*'$BETA'*'$BETA'*'$t'}'`
-#  for w0 in $w0_SLIGHT $w0_AVERAGE $w0_SEVERE
-  for NIP in 2 #`seq 3 10`
+  #for w0 in $w0_SLIGHT $w0_AVERAGE $w0_SEVERE
+#  for NIP in 2 #`seq 3 10`
+  for ALPHA in `seq 0.014 0.018 0.158` #-sigma to 3sigma
   do
+    w0=`echo $ALPHA | awk '{print $1*'$BETA'*'$BETA'*'$t'}'`
     #MOD_FILENAME=${ORIG_FILENAME}_t${t}mm_w${w0}mm_$2
+    MOD_FILENAME=${ORIG_FILENAME}_w${w0}mm_$2
     #MOD_FILENAME=${ORIG_FILENAME}_$NIP
-    MOD_FILENAME=${ORIG_FILENAME}_${SIGY}MPa
+    #MOD_FILENAME=${ORIG_FILENAME}_${SIGY}MPa
     mkdir $PATH_TO_KEYFILE/${MOD_FILENAME}
     DYNA_I=$PATH_TO_KEYFILE/${MOD_FILENAME}/${MOD_FILENAME}.dyn
     DYNA_O=`dirname $DYNA_I`/d3hsp
 
-    cat $1 | awk '/\*MAT_PLASTIC_KINEMATIC/{NR_MAT3=NR+2}
-    {if(NR==NR_MAT3)
-      printf "%10d%10G%10.1f%10.1f%10.2f%10.2f%10.1f\n",
-      $1,$2,$3,$4,'$SIGY',$6,$7;
-    else
-      print $0}' > $DYNA_I
+    #cat $1 | awk '/\*MAT_PLASTIC_KINEMATIC/{NR_MAT3=NR+2}
+    #{if(NR==NR_MAT3)
+      #printf "%10d%10G%10.1f%10.1f%10.2f%10.2f%10.1f\n",
+      #$1,$2,$3,$4,'$SIGY',$6,$7;
+    #else
+      #print $0}' > $DYNA_I
 
     #if [ -n "$NR_plate" ]; then
       #cat $1 | \
@@ -59,9 +62,9 @@ do
     #else
       #print $0}' > $DYNA_I
 
-    #$PATH_TO_SCRIPTS/impfmak.sh $DYNA_I $w0 -${2} > tmp.dyn
-    #cat tmp.dyn > $DYNA_I
-    #rm tmp.dyn
+    $PATH_TO_SCRIPTS/impfmak.sh $DYNA_I $w0 -${2} > tmp.dyn
+    cat tmp.dyn > $DYNA_I
+    rm tmp.dyn
 
     echo $MOD_FILENAME \($ORIG_FILENAME\) started at `date` |\
       tee -a $PATH_TO_KEYFILE/$LOG_FILENAME 1>&2
