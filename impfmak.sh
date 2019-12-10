@@ -38,9 +38,11 @@ else
 
   if [ $LOCAL -ne 0 ]; then
     cat $DYNFILE | \
-      awk '{
+      awk 'BEGIN{a=3160; b=880; m=4; pi=atan2(0,-1)}
+        {
         if (NR>'$NR_NODE' && NR<'$NR_NEXT' && $4==0 && $1<900000){
-          system("'$PATH_TO_SCRIPTS'/local.pl "sprintf("%d %f %f %f %d %d %f",$1,$2,$3,$4,$5,$6,'$w0max'))
+          wpl = $4+'$w0max'*sin(m*pi*$2/a)*sin(pi*$3/b);
+          printf("%8d%16G%16G%16G%8d%8d\n",$1,$2,$3,wpl,$5,$6);
         }
         else print $0
       }'
