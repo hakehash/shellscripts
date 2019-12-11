@@ -29,6 +29,7 @@ do
   #for NIP in 2 #`seq 3 10`
   #for ALPHA in `seq 0.014 0.018 0.158` #-sigma to 3sigma
   #do
+    ALPHA=0.05
     w0=`echo $ALPHA | awk '{print $1*'$BETA'*'$BETA'*'$t'}'`
     #MOD_FILENAME=${ORIG_FILENAME}_t${t}mm_w${w0}mm_$2
     #MOD_FILENAME=${ORIG_FILENAME}_w${w0}mm_$2
