@@ -28,9 +28,31 @@ else
 
   if [ $HORSE -ne 0 ]; then
     cat $DYNFILE | \
-      awk '{
+      awk 'BEGIN{
+          a=3160; b=880; pi=atan2(0,-1);
+          A0[1] = 1.1458;
+          A0[2] = -0.0616;
+          A0[3] = 0.3079;
+          A0[4] = 0.0229;
+          A0[5] = 0.1146;
+          A0[6] = -0.0065;
+          A0[7] = 0.0327;
+          A0[8] = 0.0;
+          A0[9] = 0.0;
+          A0[10] = -0.0015;
+          A0[11] = -0.0074;
+          sum = 0;
+        }
+        function abs(x){
+          return x<0 ? -x:x;
+        }
+        {
         if (NR>'$NR_NODE' && NR<'$NR_NEXT' && $4==0 && $1<900000) {
-          system("'$PATH_TO_SCRIPTS'/hhorse.pl "sprintf("%d %f %f %f %d %d %f",$1,$2,$3,$4,$5,$6,'$w0max'))
+          for(m=1;m<12;m++){
+            sum += A0[m]*sin(m*pi*$2/a)*sin(pi*$3/b);
+          }
+          wpl = $4+'$w0max'*abs(sum);
+          printf("%8d%16G%16G%16G%8d%8d\n",$1,$2,$3,wpl,$5,$6);
         }
         else print $0
       }'
