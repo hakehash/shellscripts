@@ -41,13 +41,13 @@ else
           A0[9] = 0.0;
           A0[10] = -0.0015;
           A0[11] = -0.0074;
-          sum = 0;
         }
         function abs(x){
           return x<0 ? -x:x;
         }
         {
         if (NR>'$NR_NODE' && NR<'$NR_NEXT' && $4==0 && $1<900000) {
+          sum = 0;
           for(m=1;m<12;m++){
             sum += A0[m]*sin(m*pi*$2/a)*sin(pi*$3/b);
           }
