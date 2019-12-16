@@ -22,13 +22,13 @@ else
   getymin(){
     cat $DYNFILE |\
       awk '{if(NR > '$NR_NODE' && NR < '$NR_NEXT'){ print $0 }}' |\
-      grep -v \\$ | sort -n -k 3 | head -n1 | awk '{print $2}'
+      grep -v \\$ | sort -n -k 3 | head -n1 | awk '{print $3}'
   }
 
   getymax(){
     cat $DYNFILE |\
       awk '{if(NR > '$NR_NODE' && NR < '$NR_NEXT'){ print $0 }}' |\
-      grep -v \\$ | sort -n -k 3 | tail -n1 | awk '{print $2}'
+      grep -v \\$ | sort -n -k 3 | tail -n1 | awk '{print $3}'
   }
 
   X_MIN=`getxmin`
@@ -45,10 +45,10 @@ else
 
   cat $DYNFILE |\
     awk '{if(NR > '$NR_NODE' && NR < '$NR_NEXT'){ print $0 }}' |\
-    grep -v \\$ | sort -n -k 2 |\
+    grep -v \\$ | sort -n -k 3 |\
     awk -v "ymin=$Y_MIN" -v "ymax=$Y_MAX" \
-    '$2==ymin { print $1 > "nodes_id_list_ymin.tmp" }
-     $2==ymax { print $1 > "nodes_id_list_ymax.tmp" }'
+    '$3==ymin { print $1 > "nodes_id_list_ymin.tmp" }
+     $3==ymax { print $1 > "nodes_id_list_ymax.tmp" }'
 
   DOF=1
   cat nodes_id_list_xmin.tmp |\
