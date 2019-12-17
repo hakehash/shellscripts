@@ -10,12 +10,17 @@ PATH_TO_KEYFILE=`dirname $1`
 ORIG_FILENAME=`basename $1 .dyn`
 LOG_FILENAME=autolog.txt
 #NR_plate=`grep \*SECTION_SHELL_TITLE $1 -A4 -n | grep plate$ | sed 's/[:-].*//g'`
-#NR_SECTION_SHELL=`grep \*SECTION_SHELL $1 -n | sed 's/[:-].*//g'`
 touch $PATH_TO_KEYFILE/$LOG_FILENAME
-#t_MIN=24
-#t_STEP=5
-#t_MAX=24
-#for t in `seq $t_MIN $t_STEP $t_MAX`
+run(){
+  echo $MOD_FILENAME started \ \ \ at `date` |\
+    tee -a $PATH_TO_KEYFILE/$LOG_FILENAME 1>&2
+
+  $PATH_TO_SCRIPTS/rundyn.sh $DYNA_I
+
+  echo $MOD_FILENAME terminated at `date` |\
+    tee -a $PATH_TO_KEYFILE/$LOG_FILENAME 1>&2
+}
+#for t in `seq 24 1 24`
 for SIGY in `seq 309.23 9.09 418.31` #-3sigma to 3sigma
 do
   t=24
@@ -69,14 +74,7 @@ do
     #cat tmp.dyn > $DYNA_I
     #rm tmp.dyn
     $PATH_TO_SCRIPTS/impfmak.sh $1 $w0 -${2} > $DYNA_I
-
-    echo $MOD_FILENAME started \ \ \ at `date` |\
-      tee -a $PATH_TO_KEYFILE/$LOG_FILENAME 1>&2
-
-    $PATH_TO_SCRIPTS/rundyn.sh $DYNA_I
-
-    echo $MOD_FILENAME terminated at `date` |\
-      tee -a $PATH_TO_KEYFILE/$LOG_FILENAME 1>&2
+    run
   done
 #done
 fi
