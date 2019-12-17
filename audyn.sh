@@ -66,9 +66,9 @@ do
       #print $0}' > $DYNA_I
 
     ##$PATH_TO_SCRIPTS/impfmak.sh $DYNA_I $w0 -${2} > tmp.dyn
-    #$PATH_TO_SCRIPTS/impfmak.sh $1 $w0 -${2} > tmp.dyn
     #cat tmp.dyn > $DYNA_I
     #rm tmp.dyn
+    $PATH_TO_SCRIPTS/impfmak.sh $1 $w0 -${2} > $DYNA_I
 
     echo $MOD_FILENAME started \ \ \ at `date` |\
       tee -a $PATH_TO_KEYFILE/$LOG_FILENAME 1>&2
