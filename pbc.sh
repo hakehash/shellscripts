@@ -1,7 +1,7 @@
 #!/bin/sh
 
 if [ $# -eq 0 ] || [ ! -f $1 ]; then
-  echo "usage:\t`basename $0` keywordfile.dyn -{dxya}" 1>&2
+  echo "usage:\t`basename $0` keywordfile.dyn -{dxy}" 1>&2
 else
   DYNFILE=$1
   shift
