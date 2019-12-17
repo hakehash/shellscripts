@@ -1,7 +1,7 @@
 #!/bin/sh
 
 if [ $# -eq 0 ] || [ ! -f $1 ]; then
-  echo "usage:\t`basename $0` keywordfile.dyn" 1>&2
+  echo "usage:\t`basename $0` keywordfile.dyn -{dxya}" 1>&2
 else
   DYNFILE=$1
   shift
@@ -69,7 +69,7 @@ else
     done
   }
 
-  print_y_pbc{
+  print_y_pbc(){
     for DOF in 1 3 4 6
     do
     paste nodes_id_list_ymin.tmp nodes_id_list_ymax.tmp |\
@@ -79,17 +79,17 @@ else
     done
   }
 
-  while getopts dxy OPT ; do
+  while getopts "dxy" OPT ; do
     case $OPT in
-      d) print_dummmy
+      d) print_dummy
         ;;
       x) print_x_pbc
         ;;
       y) print_y_pbc
         ;;
-      ?) print_dummmy
+      *) print_dummy
          print_x_pbc
-         print_y_dummy
+         print_y_pbc
         ;;
     esac
   done
