@@ -9,6 +9,7 @@ else
   PATH_TO_KEYFILE=`dirname $1`
   ORIG=$1
   ORIG_FILENAME=`basename $1 .dyn`
+  shift
   LOG_FILENAME=autolog.txt
 
   t=24
