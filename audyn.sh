@@ -2,80 +2,121 @@
 if [ $# -eq 0 ]; then
   echo "usage:\t`basename $0` /path/to/keywordfile.dyn [ghl]" 1>&2
 else
-PATH_TO_LSDYNA=/mnt/c/LSDYNA/program/
-#NAME_OF_EXEC=ls-dyna_smp_s_R10.0_winx64_ifort131.exe
-NAME_OF_EXEC=ls-dyna_smp_s_R901_winx64_ifort131.exe
-PATH_TO_SCRIPTS=`cd $(dirname $0) && cd -`
-PATH_TO_KEYFILE=`dirname $1`
-ORIG_FILENAME=`basename $1 .dyn`
-LOG_FILENAME=autolog.txt
-#NR_plate=`grep \*SECTION_SHELL_TITLE $1 -A4 -n | grep plate$ | sed 's/[:-].*//g'`
-touch $PATH_TO_KEYFILE/$LOG_FILENAME
-run(){
-  echo $MOD_FILENAME started \ \ \ at `date` |\
-    tee -a $PATH_TO_KEYFILE/$LOG_FILENAME 1>&2
+  PATH_TO_LSDYNA=/mnt/c/LSDYNA/program/
+  #NAME_OF_EXEC=ls-dyna_smp_s_R10.0_winx64_ifort131.exe
+  NAME_OF_EXEC=ls-dyna_smp_s_R901_winx64_ifort131.exe
+  PATH_TO_SCRIPTS=`cd $(dirname $0) && cd -`
+  PATH_TO_KEYFILE=`dirname $1`
+  ORIG=$1
+  ORIG_FILENAME=`basename $1 .dyn`
+  LOG_FILENAME=autolog.txt
 
-  $PATH_TO_SCRIPTS/rundyn.sh $DYNA_I
-
-  echo $MOD_FILENAME terminated at `date` |\
-    tee -a $PATH_TO_KEYFILE/$LOG_FILENAME 1>&2
-}
-#for t in `seq 24 1 24`
-for SIGY in `seq 309.23 9.09 418.31` #-3sigma to 3sigma
-do
   t=24
-  #SIGY=363.77
+  SIGY=363.77
   BETA=`awk 'BEGIN{print 880/'$t'*sqrt('$SIGY'/205800)}'`
-  #w0=2.46
+  w0=2.85173
   #w0_SLIGHT=`echo 0.025 | awk '{print $1*'$BETA'*'$BETA'*'$t'}'`
   #w0_AVERAGE=`echo 0.1 | awk '{print $1*'$BETA'*'$BETA'*'$t'}'`
   #w0_SEVERE=`echo 0.3 | awk '{print $1*'$BETA'*'$BETA'*'$t'}'`
   #for w0 in $w0_SLIGHT $w0_AVERAGE $w0_SEVERE
-  #for NIP in 2 #`seq 3 10`
-  #for ALPHA in `seq 0.014 0.018 0.158` #-sigma to 3sigma
-  #do
-    ALPHA=0.05
-    w0=`echo $ALPHA | awk '{print $1*'$BETA'*'$BETA'*'$t'}'`
-    #MOD_FILENAME=${ORIG_FILENAME}_t${t}mm_w${w0}mm_$2
-    #MOD_FILENAME=${ORIG_FILENAME}_w${w0}mm_$2
-    #MOD_FILENAME=${ORIG_FILENAME}_$NIP
-    MOD_FILENAME=${ORIG_FILENAME}_${SIGY}MPa
-    #MOD_FILENAME=${ORIG_FILENAME}_${SIGY}MPa_w${w0}mm_$2
+  ALPHA=0.05
+  #MOD_FILENAME=${ORIG_FILENAME}_${SIGY}MPa_w${w0}mm_$2
+
+  init(){
+    touch $PATH_TO_KEYFILE/$LOG_FILENAME
     mkdir $PATH_TO_KEYFILE/${MOD_FILENAME}
     DYNA_I=$PATH_TO_KEYFILE/${MOD_FILENAME}/${MOD_FILENAME}.dyn
     DYNA_O=`dirname $DYNA_I`/d3hsp
+  }
 
-    cat $1 | awk '/\*MAT_PLASTIC_KINEMATIC/{NR_MAT3=NR+2}
-    {if(NR==NR_MAT3)
-      printf "%10d%10G%10.1f%10.1f%10.2f%10.2f%10.1f\n",
-      $1,$2,$3,$4,'$SIGY',$6,$7;
-    else
-      print $0}' > $DYNA_I
+  run(){
+    echo $MOD_FILENAME started \ \ \ at `date` |\
+      tee -a $PATH_TO_KEYFILE/$LOG_FILENAME 1>&2
+    $PATH_TO_SCRIPTS/rundyn.sh $DYNA_I
+    echo $MOD_FILENAME terminated at `date` |\
+      tee -a $PATH_TO_KEYFILE/$LOG_FILENAME 1>&2
+  }
 
-    #if [ -n "$NR_plate" ]; then
-      #cat $1 | \
-      #awk '{
-        #if(NR=='$NR_plate+4')
-          #printf "%10.1f%10.1f%10.1f%10.1f%10.1f%10.1f%10.1f%10d\n",
-          #'$t','$t','$t','$t',0,0,0,0
-        #else
-          #print$0
-      #}' > $DYNA_I
-    #fi
+  yield(){
+    for SIGY in `seq 309.23 9.09 418.31` #-3sigma to 3sigma
+    do
+      MOD_FILENAME=${ORIG_FILENAME}_${SIGY}MPa
+      init
+      cat $ORIG | awk '/\*MAT_PLASTIC_KINEMATIC/{NR_MAT3=NR+2}
+      {if(NR==NR_MAT3)
+        printf "%10d%10G%10.1f%10.1f%10.2f%10.2f%10.1f\n",
+        $1,$2,$3,$4,'$SIGY',$6,$7;
+      else
+        print $0}' > $DYNA_I
+      run
+    done
+  }
 
-    #cat $1 | awk '/\*SECTION_SHELL/{NR_SS=NR+3}
-    #{if(NR==NR_SS)
-      #printf "%10d%10d%10.1f%10d%10.1f%10d%10d%10d\n",
-      #$1,$2,$3,'$NIP',$5,$6,$7,$8;
-    #else
-      #print $0}' > $DYNA_I
+  #NR_plate=`grep \*SECTION_SHELL_TITLE $1 -A4 -n | grep plate$ | sed 's/[:-].*//g'`
+  t(){
+    for t in `seq 24 1 24`
+    do
+      MOD_FILENAME=${ORIG_FILENAME}_t${t}mm_w${w0}mm_$2
+      init
+      if [ -n "$NR_plate" ]; then
+        cat $ORIG | \
+        awk '{
+          if(NR=='$NR_plate+4')
+            printf "%10.1f%10.1f%10.1f%10.1f%10.1f%10.1f%10.1f%10d\n",
+            '$t','$t','$t','$t',0,0,0,0
+          else
+            print$0
+        }' > $DYNA_I
+      fi
+      run
+    done
+  }
 
-    ##$PATH_TO_SCRIPTS/impfmak.sh $DYNA_I $w0 -${2} > tmp.dyn
-    #cat tmp.dyn > $DYNA_I
-    #rm tmp.dyn
-    $PATH_TO_SCRIPTS/impfmak.sh $1 $w0 -${2} > $DYNA_I
-    run
+  nip(){
+    for NIP in `seq 3 10`
+    do
+      MOD_FILENAME=${ORIG_FILENAME}_$NIP
+      init
+      cat $ORIG | awk '/\*SECTION_SHELL/{NR_SS=NR+3}
+      {if(NR==NR_SS)
+        printf "%10d%10d%10.1f%10d%10.1f%10d%10d%10d\n",
+        $1,$2,$3,'$NIP',$5,$6,$7,$8;
+      else
+        print $0}' > $DYNA_I
+      run
+    done
+  }
+
+  ##$PATH_TO_SCRIPTS/impfmak.sh $DYNA_I $w0 -${2} > tmp.dyn
+  #cat tmp.dyn > $DYNA_I
+  #rm tmp.dyn
+  impf(){
+    for ALPHA in `seq 0.014 0.018 0.158` #-sigma to 3sigma
+    do
+      w0=`echo $ALPHA | awk '{print $1*'$BETA'*'$BETA'*'$t'}'`
+      MOD_FILENAME=${ORIG_FILENAME}_w${w0}mm_$1
+      init
+      $PATH_TO_SCRIPTS/impfmak.sh $ORIG $w0 -${1} > $DYNA_I
+      run
+    done
+  }
+
+  while getopts "ytnilh" OPT ; do
+    case $OPT in
+      y) yield
+        ;;
+      t) t
+        ;;
+      n) nip
+        ;;
+      i) impf l
+         impf h
+        ;;
+      l) impf l
+        ;;
+      h) impf h
+        ;;
+    esac
   done
-#done
 fi
 
