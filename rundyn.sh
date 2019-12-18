@@ -17,11 +17,11 @@ while [ $# -ne 0 ]; do
     echo $1 started at `date` |\
       tee -a $PATH_TO_KEYFILE/$LOG_FILENAME 1>&2
     if [ `uname -r | grep Microsoft` ]; then
-      DYNA_I=`echo $DYNA_I | sed 's/\/mnt\/f/F:/' | sed 's/\//\\\\\\\\/g'`
-      DYNA_O=`echo $DYNA_O | sed 's/\/mnt\/f/F:/' | sed 's/\//\\\\\\\\/g'`
+      DYNA_I=`echo $DYNA_I | sed 's/\/mnt\/\([a-z]\)/\1:/' | sed 's/\//\\\\\\\\/g'`
+      DYNA_O=`echo $DYNA_O | sed 's/\/mnt\/\([a-z]\)/\1:/' | sed 's/\//\\\\\\\\/g'`
     elif [ `uname -a | grep Cygwin` ]; then
-      DYNA_I=`echo $DYNA_I | sed 's/\/cygdrive\/f/F:/' | sed 's/\//\\\\\\\\/g'`
-      DYNA_O=`echo $DYNA_O | sed 's/\/cygdrive\/f/F:/' | sed 's/\//\\\\\\\\/g'`
+      DYNA_I=`echo $DYNA_I | sed 's/\/cygdrive\/\([a-z]\)/\1:/' | sed 's/\//\\\\\\\\/g'`
+      DYNA_O=`echo $DYNA_O | sed 's/\/cygdrive\/\([a-z]\)/\1:/' | sed 's/\//\\\\\\\\/g'`
     fi
     $PATH_TO_LSDYNA$NAME_OF_EXEC I\=$DYNA_I O\=$DYNA_O
     $PATH_TO_SCRIPTS/secf2csv.sh secforc
