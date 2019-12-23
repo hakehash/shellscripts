@@ -99,10 +99,6 @@ else
         ;;
       f) print_yall_pbc
         ;;
-      *) print_dummy
-         print_x_pbc
-         print_y_pbc
-        ;;
     esac
   done
 
