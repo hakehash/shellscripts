@@ -79,6 +79,16 @@ else
     done
   }
 
+  print_yall_pbc(){
+    for DOF in 1 2 3 4 5 6
+    do
+    paste nodes_id_list_ymin.tmp nodes_id_list_ymax.tmp |\
+      awk '{
+      printf("*CONSTRAINED_LINEAR_GLOBAL\n%10d\n%10d%10d%10.1f\n%10d%10d%10.1f\n",
+      '$DOF'*10000+NR, $1, '$DOF', -1, $2, '$DOF', 1)}'
+    done
+  }
+
   while getopts "dxy" OPT ; do
     case $OPT in
       d) print_dummy
@@ -86,6 +96,8 @@ else
       x) print_x_pbc
         ;;
       y) print_y_pbc
+        ;;
+      f) print_yall_pbc
         ;;
       *) print_dummy
          print_x_pbc
