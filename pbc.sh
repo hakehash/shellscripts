@@ -80,7 +80,7 @@ else
   }
 
   print_yall_pbc(){
-    for DOF in 1 2 3 4 5 6
+    for DOF in 2 5
     do
     paste nodes_id_list_ymin.tmp nodes_id_list_ymax.tmp |\
       awk '{
@@ -89,7 +89,7 @@ else
     done
   }
 
-  while getopts "dxy" OPT ; do
+  while getopts "dxyf" OPT ; do
     case $OPT in
       d) print_dummy
         ;;
