@@ -1,6 +1,6 @@
 #!/bin/sh
 
-if [ $# -eq 0 ] || [ ! -f $1 ]; then
+if [ $# -le 1 ] || [ ! -f $1 ]; then
   echo "usage:\t`basename $0` keywordfile.dyn -{dxy}" 1>&2
 else
   DYNFILE=$1
@@ -70,7 +70,7 @@ else
   }
 
   print_y_pbc(){
-    for DOF in 1 3 4 6
+    for DOF in 1 2 3 4 5 6
     do
     paste nodes_id_list_ymin.tmp nodes_id_list_ymax.tmp |\
       awk '{
