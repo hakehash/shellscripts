@@ -51,7 +51,7 @@ else
           for(m=1;m<12;m++){
             sum += A0[m]*sin(m*pi*$2/a)*sin(pi*$3/b);
           }
-          if($x<$a || 2*$a<$x){
+          if($2<a || 2*a<$2){
             wpl = $4+'$w0max'*abs(sum)*0.99;
           } else {
             wpl = $4+'$w0max'*abs(sum);
@@ -67,7 +67,7 @@ else
       awk 'BEGIN{a=3160; b=880; m=4; pi=atan2(0,-1)}
         {
         if (NR>'$NR_NODE' && NR<'$NR_NEXT' && $4==0 && $1<900000){
-          if($x<$a || 2*$a<$x){
+          if($2<a || 2*a<$2){
             wpl = $4+'$w0max'*sin(m*pi*$2/a)*sin(pi*$3/b)*0.99;
           } else {
             wpl = $4+'$w0max'*sin(m*pi*$2/a)*sin(pi*$3/b);
