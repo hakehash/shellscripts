@@ -60,7 +60,7 @@ else
   }
 
   print_x_pbc(){
-    for DOF in 2 3 5 6
+    for DOF in 2 3 4 5 6
     do
     paste nodes_id_list_xmin.tmp nodes_id_list_xmax.tmp |\
       awk '{
