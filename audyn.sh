@@ -114,10 +114,11 @@ else
     done
   }
 
-  original(){
+  origin(){
     w0=0.00
     MOD_FILENAME=${ORIG_FILENAME}_w${w0}mm
     init
+    cat $ORIG > $DYNA_I
     run
   }
 
@@ -130,7 +131,7 @@ else
       n) nip 0
          nip 1
         ;;
-      i) original
+      i) origin
          impf l
          impf h
         ;;
@@ -138,7 +139,7 @@ else
         ;;
       h) impf h
         ;;
-      o) original
+      o) origin
         ;;
     esac
   done
