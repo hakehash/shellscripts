@@ -76,14 +76,26 @@ else
   nip(){
     for NIP in `seq 3 10`
     do
-      MOD_FILENAME=${ORIG_FILENAME}_$NIP
+      if [ $1 = 0 ]; then
+        INTGRD="gauss"
+      elif [ $1 = 1 ]; then
+        INTGRD="lobatto"
+      fi
+      MOD_FILENAME=${ORIG_FILENAME}_$INTGRD_$NIP
       init
-      cat $ORIG | awk '/\*SECTION_SHELL/{NR_SS=NR+3}
-      {if(NR==NR_SS)
-        printf "%10d%10d%10.1f%10d%10.1f%10d%10d%10d\n",
-        $1,$2,$3,'$NIP',$5,$6,$7,$8;
-      else
-        print $0}' > $DYNA_I
+      cat $ORIG | awk '
+        /\*CONTROL_SHELL/{NR_CS=NR+4}
+        /\*SECTION_SHELL_TITLE/{NR_SS=NR+3}
+        {
+        if(NR==NR_CS)
+          printf "%10.1f%10d%10d%10d%10d\n",
+          $1,'$1',$3,$4,$5;
+        else if(NR==NR_SS)
+          printf "%10d%10d%10.1f%10d%10.1f%10d%10d%10d\n",
+          $1,$2,$3,'$NIP',$5,$6,$7,$8;
+        else
+          print $0
+        }' > $DYNA_I
       run
     done
   }
@@ -115,7 +127,8 @@ else
         ;;
       t) t
         ;;
-      n) nip
+      n) nip 0
+         nip 1
         ;;
       i) original
          impf l
