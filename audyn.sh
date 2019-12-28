@@ -102,7 +102,14 @@ else
     done
   }
 
-  while getopts "ytnilh" OPT ; do
+  original(){
+    w0=0.00
+    MOD_FILENAME=${ORIG_FILENAME}_w${w0}mm
+    init
+    run
+  }
+
+  while getopts "ytnilho" OPT ; do
     case $OPT in
       y) yield
         ;;
@@ -110,12 +117,15 @@ else
         ;;
       n) nip
         ;;
-      i) impf l
+      i) original
+         impf l
          impf h
         ;;
       l) impf l
         ;;
       h) impf h
+        ;;
+      o) original
         ;;
     esac
   done
