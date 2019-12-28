@@ -55,7 +55,7 @@ else
             wpl = $4+'$w0max'*abs(sum)*0.99;
           } else {
             wpl = $4+'$w0max'*abs(sum);
-          )
+          }
           printf("%8d%16G%16G%16G%8d%8d\n",$1,$2,$3,wpl,$5,$6);
         }
         else print $0
