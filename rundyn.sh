@@ -29,7 +29,7 @@ while [ $# -ne 0 ]; do
       tee -a $PATH_TO_KEYFILE/$LOG_FILENAME 1>&2
     cat $PATH_TO_KEYFILE/secforc.csv | sort -t "," -r -n -k 2 | head -n1 |\
       tee -a $PATH_TO_KEYFILE/$LOG_FILENAME |\
-      $PATH_TO_SCRIPTS/line_notify.sh
+      $PATH_TO_SCRIPTS/line_notify.sh `basename $DYNA_I`
     $PATH_TO_SCRIPTS/plotss.sh $PATH_TO_KEYFILE/secforc.csv
     cd -
   fi
