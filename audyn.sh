@@ -81,7 +81,7 @@ else
       elif [ $1 = 1 ]; then
         INTGRD="lobatto"
       fi
-      MOD_FILENAME=${ORIG_FILENAME}_$INTGRD_$NIP
+      MOD_FILENAME=${ORIG_FILENAME}_${INTGRD}_$NIP
       init
       cat $ORIG | awk '
         /\*CONTROL_SHELL/{NR_CS=NR+4}
