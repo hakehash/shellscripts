@@ -32,6 +32,8 @@ while [ $# -ne 0 ]; do
       $PATH_TO_SCRIPTS/line_notify.sh `basename $1`
     $PATH_TO_SCRIPTS/plotss.sh $PATH_TO_KEYFILE/secforc.csv
     cd -
+  else
+    echo error: file not found. 1>&2
   fi
   shift
 done
