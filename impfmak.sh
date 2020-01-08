@@ -7,29 +7,19 @@ LOCAL=0
 if [ $# -lt 3 ] || [ ! -f $1 ]; then
   echo "usage:\t`basename $0` file w0max -[ghl]" 1>&2
 else
+  a=3160
+  b=880
   DYNFILE=$1
   w0max=$2
-  while [ $# -gt 2 ]; do
-    if [ $3 = "-g" ]; then
-      GLOBAL=1
-    fi
-    if [ $3 = "-h" ]; then
-      HORSE=1
-    fi
-    if [ $3 = "-l" ]; then
-      LOCAL=1
-    fi
-    shift
-  done
-
+  shift 2
   NR_NODE=`awk '/^\*NODE$/{print NR}' $DYNFILE`
   NR_NEXT=`awk '/^\*/{print NR}' $DYNFILE | grep -A1 "^${NR_NODE}$" | grep -v "^${NR_NODE}$"`
   PATH_TO_SCRIPTS=`dirname $0`
 
-  if [ $HORSE -ne 0 ]; then
+  horse(){
     cat $DYNFILE | \
       awk 'BEGIN{
-          a=3160; b=880; pi=atan2(0,-1);
+          a='$a'; b='$b'; pi=atan2(0,-1);
           A0[1] = 1.1458;
           A0[2] = -0.0616;
           A0[3] = 0.3079;
@@ -60,11 +50,11 @@ else
         }
         else print $0
       }'
-  fi
+  }
 
-  if [ $LOCAL -ne 0 ]; then
+  elastic(){
     cat $DYNFILE | \
-      awk 'BEGIN{a=3160; b=880; m=4; pi=atan2(0,-1)}
+      awk 'BEGIN{a='$a'; b='$b'; m=4; pi=atan2(0,-1)}
         {
         if (NR>'$NR_NODE' && NR<'$NR_NEXT' && $4==0 && $1<900000){
           if($2<a || 2*a<$2){
@@ -76,5 +66,20 @@ else
         }
         else print $0
       }'
-  fi
+  }
+
+  while getopts "ghla:b:" OPT ; do
+    case $OPT in
+      h) horse
+        ;;
+      l) elastic
+        ;;
+      g) echo This option is not implemented yet.
+        ;;
+      a) a=$OPTARG
+        ;;
+      b) b=$OPTARG
+        ;;
+    esac
+  done
 fi
