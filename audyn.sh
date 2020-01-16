@@ -114,6 +114,17 @@ else
     done
   }
 
+  impf_smith(){
+    for ALPHA in 0.025 0.05 0.1 0.3
+    do
+      w0=`echo $ALPHA | awk '{print $1*'$BETA'*'$BETA'*'$t'}'`
+      MOD_FILENAME=${ORIG_FILENAME}_w${w0}mm_$1
+      init
+      $PATH_TO_SCRIPTS/impfmak.sh $ORIG $w0 -${1} > $DYNA_I
+      run
+    done
+  }
+
   origin(){
     w0=0.00
     MOD_FILENAME=${ORIG_FILENAME}_w${w0}mm
@@ -122,7 +133,7 @@ else
     run
   }
 
-  while getopts "ytnilho" OPT ; do
+  while getopts "ytnilhso" OPT ; do
     case $OPT in
       y) yield
         ;;
@@ -140,6 +151,8 @@ else
       h) impf h
         ;;
       o) origin
+        ;;
+      s) impf_smith l
         ;;
     esac
   done
