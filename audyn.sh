@@ -1,6 +1,6 @@
 #!/bin/sh
 if [ $# -eq 0 ]; then
-  echo "usage:\t`basename $0` /path/to/keywordfile.dyn [ghl]" 1>&2
+  echo "usage:\t`basename $0` /path/to/keywordfile.dyn [ytnilhso]" 1>&2
 else
   PATH_TO_LSDYNA=/mnt/c/LSDYNA/program/
   #NAME_OF_EXEC=ls-dyna_smp_s_R10.0_winx64_ifort131.exe
