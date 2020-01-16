@@ -1,9 +1,5 @@
 #!/bin/sh
 
-GLOBAL=0
-HORSE=0
-LOCAL=0
-
 if [ $# -lt 3 ] || [ ! -f $1 ]; then
   echo "usage:\t`basename $0` file w0max -[ghl]" 1>&2
 else
