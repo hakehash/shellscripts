@@ -153,6 +153,7 @@ else
       o) origin
         ;;
       s) impf_smith l
+         impf_smith h
         ;;
     esac
   done
