@@ -115,7 +115,7 @@ else
   }
 
   impf_smith(){
-    for ALPHA in 0.025 0.05 0.1 0.3
+    for ALPHA in 0.025 0.1 0.3
     do
       w0=`echo $ALPHA | awk '{print $1*'$BETA'*'$BETA'*'$t'}'`
       MOD_FILENAME=${ORIG_FILENAME}_w${w0}mm_$1
