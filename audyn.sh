@@ -100,9 +100,6 @@ else
     done
   }
 
-  ##$PATH_TO_SCRIPTS/impfmak.sh $DYNA_I $w0 -${2} > tmp.dyn
-  #cat tmp.dyn > $DYNA_I
-  #rm tmp.dyn
   impf(){
     for ALPHA in `seq 0.014 0.018 0.158` #-sigma to 3sigma
     do
@@ -133,7 +130,19 @@ else
     run
   }
 
-  while getopts "ytnilhso" OPT ; do
+  residual(){
+    for ALPHA in 0.025 0.05 0.1 0.3
+    do
+      w0=`echo $ALPHA | awk '{print $1*'$BETA'*'$BETA'*'$t'}'`
+      MOD_FILENAME=${ORIG_FILENAME}_w${w0}mm_$1_res
+      init
+      $PATH_TO_SCRIPTS/resapp.sh $ORIG $ALPHA > tmp.dyn
+      $PATH_TO_SCRIPTS/impfmak.sh tmp.dyn $w0 -${1} > $DYNA_I
+      rm tmp.dyn
+    done
+  }
+
+  while getopts "ytnilhosr" OPT ; do
     case $OPT in
       y) yield
         ;;
@@ -154,6 +163,9 @@ else
         ;;
       s) impf_smith l
          impf_smith h
+        ;;
+      r) residual l
+         residual h
         ;;
     esac
   done
