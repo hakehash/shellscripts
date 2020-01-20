@@ -19,9 +19,11 @@ else
         a='$a';
         b='$b';
         t='$t';
+        boa=3*b;
         etat=33;
-        mesh_size=55;
-        NR_NEXT='$NR_END'
+        n=16;
+        m=n/2-1;
+        mesh_size=(b-2*etat)/2/(n/2-1);
       }
       function abs(x){
         return x<0 ? -x:x;
@@ -29,20 +31,24 @@ else
       #/^\*NODE$/{NR_NODE=NR}
       #NR>NR_NODE && NR<NR_NEXT && /^\*/{NR_NEXT=NR; print NR}
 
-      {if(NR>'$NR_NODE' && NR<'$NR_NEXT' && $4==0){
-        if(int(abs($3-mesh_size)+0.5)%b==0){
-          y=$3-(mesh_size-etat);
-          printf("%8d%16G%16G%16G%8d%8d\n",$1,$2,y,$4,$5,$6);
-        } else if(int(abs($3)+0.5)%b==0){
+      {if(NR>'$NR_NODE' && NR<'$NR_NEXT' && $4==0 && $1<900000){
+        if(int(abs($3)+0.5)%b==0){
           print $0
-        } else if(int(abs($3+mesh_size)+0.5)%b==0){
-          y=$3+(mesh_size-etat);
-          printf("%8d%16G%16G%16G%8d%8d\n",$1,$2,y,$4,$5,$6);
+          for(i=0;i<m;i++){
+            printf("%8d%16G%16G%16G%8d%8d\n",$1+i+1,$2,$3+etat+i*mesh_size,$4,$5,$6);
+          }
         } else if(int(abs($3)+0.5)%(b/2)==0){
-          print $0;
+          print $0
+          if($3<boa/2){
+            for(i=1;i<=m;i++){
+              printf("%8d%16G%16G%16G%8d%8d\n",$1+i,$2,$3+i*mesh_size,$4,$5,$6);
+            }
+          }
+        } else {
+          #print $0;
         }
       } else {
-        #print $0;
+        print $0;
       }}'
 fi
 
