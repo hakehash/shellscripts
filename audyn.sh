@@ -135,8 +135,8 @@ else
       $PATH_TO_SCRIPTS/resapp.sh $ORIG $ALPHA > tmp.dyn
       $PATH_TO_SCRIPTS/impfmak.sh tmp.dyn $w0 -${1} > $DYNA_I
       rm tmp.dyn
+      run
     done
-    run
   }
 
   while getopts "ytnilhosr" OPT ; do

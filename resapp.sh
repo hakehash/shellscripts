@@ -6,6 +6,7 @@ else
   a=3160
   b=880
   t=24
+  n=16
   SIGY=363.77
   DYNFILE=$1
   ALPHA=$2
@@ -35,14 +36,13 @@ else
         SIGY='$SIGY';
         SIGr='$LEVEL'*SIGY;
         bt=b*SIGr/(SIGr-SIGY)/2;
-        n=16;
+        n='$n';
         m=n/2-1;
         mesh_size=(b-2*bt)/2/(n/2-1);
       }
       function abs(x){
         return x<0 ? -x:x;
       }
-      #NR>NR_NODE && NR<NR_NEXT && /^\*/{NR_NEXT=NR; print NR}
 
       !/^\*END$/{if(NR>'$NR_NODE' && NR<'$NR_NEXT' && $4==0 && $1<900000){
         if(int(abs($3)+0.5)%b==0){
