@@ -16,10 +16,6 @@ else
   SIGY=363.77
   BETA=`awk 'BEGIN{print 880/'$t'*sqrt('$SIGY'/205800)}'`
   w0=2.85173
-  #w0_SLIGHT=`echo 0.025 | awk '{print $1*'$BETA'*'$BETA'*'$t'}'`
-  #w0_AVERAGE=`echo 0.1 | awk '{print $1*'$BETA'*'$BETA'*'$t'}'`
-  #w0_SEVERE=`echo 0.3 | awk '{print $1*'$BETA'*'$BETA'*'$t'}'`
-  #for w0 in $w0_SLIGHT $w0_AVERAGE $w0_SEVERE
   ALPHA=0.05
   #MOD_FILENAME=${ORIG_FILENAME}_${SIGY}MPa_w${w0}mm_$2
 
@@ -112,7 +108,7 @@ else
   }
 
   impf_smith(){
-    for ALPHA in 0.025 0.05 0.1 0.3
+    for ALPHA in 0.025 0.1 0.3
     do
       w0=`echo $ALPHA | awk '{print $1*'$BETA'*'$BETA'*'$t'}'`
       MOD_FILENAME=${ORIG_FILENAME}_w${w0}mm_$1
