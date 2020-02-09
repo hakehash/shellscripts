@@ -64,13 +64,53 @@ else
       }'
   }
 
-  while getopts "ghla:b:" OPT ; do
+  paik1(){
+    cat $DYNFILE | \
+      awk 'BEGIN{
+          a='$a'; b='$b'; pi=atan2(0,-1);
+          B1[1] = 1.0;
+          B1[2] = -0.0235;
+          B1[3] = 0.3837;
+          B1[4] = -0.0259;
+          B1[5] = 0.2127;
+          B1[6] = -0.0371;
+          B1[7] = 0.0478;
+          B1[8] = -0.0201;
+          B1[9] = 0.0010;
+          B1[10] = -0.0090;
+          B1[11] = 0.0005;
+        }
+        function abs(x){
+          return x<0 ? -x:x;
+        }
+        {
+        if (NR>'$NR_NODE' && NR<'$NR_NEXT' && $4==0 && $1<900000) {
+          sum = 0;
+          for(m=1;m<12;m++){
+            sum += B1[m]*sin(m*pi*$2/a)*sin(pi*$3/b);
+          }
+          if($2<a || 2*a<$2){
+            wpl = $4+'$w0max'*abs(sum)*0.99;
+          } else {
+            wpl = $4+'$w0max'*abs(sum);
+          }
+          printf("%8d%16G%16G%16G%8d%8d\n",$1,$2,$3,wpl,$5,$6);
+        }
+        else print $0
+      }'
+  }
+
+  while getopts "ghlpqrsa:b:" OPT ; do
     case $OPT in
       h) horse
         ;;
       l) elastic
         ;;
       g) echo This option is not implemented yet.
+        ;;
+      p) paik1
+        ;;
+      q) paik2
         ;;
       a) a=$OPTARG
         ;;
