@@ -139,7 +139,7 @@ else
     done
   }
 
-  while getopts "ytnilhosr" OPT ; do
+  while getopts "ytnilhopsr" OPT ; do
     case $OPT in
       y) yield
         ;;
@@ -157,6 +157,11 @@ else
       h) impf h
         ;;
       o) origin
+        ;;
+      p) impf p
+         impf_smith p
+         impf q
+         impf_smith q
         ;;
       s) impf_smith l
          impf_smith h
