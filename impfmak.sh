@@ -100,6 +100,42 @@ else
       }'
   }
 
+  paik2(){
+    cat $DYNFILE | \
+      awk 'BEGIN{
+          a='$a'; b='$b'; pi=atan2(0,-1);
+          B2[1] = 0.8807;
+          B2[2] = 0.0643;
+          B2[3] = 0.0344;
+          B2[4] = -0.1056;
+          B2[5] = 0.0183;
+          B2[6] = 0.0480;
+          B2[7] = 0.0150;
+          B2[8] = -0.0101;
+          B2[9] = 0.0082;
+          B2[10] = 0.0001;
+          B2[11] = -0.0103;
+        }
+        function abs(x){
+          return x<0 ? -x:x;
+        }
+        {
+        if (NR>'$NR_NODE' && NR<'$NR_NEXT' && $4==0 && $1<900000) {
+          sum = 0;
+          for(m=1;m<12;m++){
+            sum += B2[m]*sin(m*pi*$2/a)*sin(pi*$3/b);
+          }
+          if($2<a || 2*a<$2){
+            wpl = $4+'$w0max'*abs(sum)*0.99;
+          } else {
+            wpl = $4+'$w0max'*abs(sum);
+          }
+          printf("%8d%16G%16G%16G%8d%8d\n",$1,$2,$3,wpl,$5,$6);
+        }
+        else print $0
+      }'
+  }
+
   while getopts "ghlpqrsa:b:" OPT ; do
     case $OPT in
       h) horse
