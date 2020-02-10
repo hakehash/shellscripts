@@ -136,6 +136,77 @@ else
       }'
   }
 
+  paik3(){
+    cat $DYNFILE | \
+      awk 'BEGIN{
+          a='$a'; b='$b'; pi=atan2(0,-1);
+          B3[1] = 0.5500;
+          B3[2] = -0.4966;
+          B3[3] = 0.0021;
+          B3[4] = 0.0213;
+          B3[5] = -0.0600;
+          B3[6] = -0.0403;
+          B3[7] = 0.0228;
+          B3[8] = -0.0089;
+          B3[9] = -0.0010;
+          B3[10] = -0.0057;
+          B3[11] = -0.0007;
+        }
+        function abs(x){
+          return x<0 ? -x:x;
+        }
+        {
+        if (NR>'$NR_NODE' && NR<'$NR_NEXT' && $4==0 && $1<900000) {
+          sum = 0;
+          for(m=1;m<12;m++){
+            sum += B2[m]*sin(m*pi*$2/a)*sin(pi*$3/b);
+          }
+          if($2<a || 2*a<$2){
+            wpl = $4+'$w0max'*sum*0.99;
+          } else {
+            wpl = $4+'$w0max'*sum*-1;
+          }
+          printf("%8d%16G%16G%16G%8d%8d\n",$1,$2,$3,wpl,$5,$6);
+        }
+        else print $0
+      }'
+  }
+
+  paik4(){
+    cat $DYNFILE | \
+      awk 'BEGIN{
+          a='$a'; b='$b'; pi=atan2(0,-1);
+          B4[1] = 0.0;
+          B4[2] = -0.4966;
+          B4[3] = 0.0021;
+          B4[4] = 0.0213;
+          B4[5] = -0.0600;
+          B4[6] = -0.0403;
+          B4[7] = 0.0228;
+          B4[8] = -0.0089;
+          B4[9] = -0.0010;
+          B4[10] = -0.0057;
+          B4[11] = -0.0007;
+        }
+        function abs(x){
+          return x<0 ? -x:x;
+        }
+        {
+        if (NR>'$NR_NODE' && NR<'$NR_NEXT' && $4==0 && $1<900000) {
+          sum = 0;
+          for(m=1;m<12;m++){
+            sum += B2[m]*sin(m*pi*$2/a)*sin(pi*$3/b);
+          }
+          if($2<a || 2*a<$2){
+            wpl = $4+'$w0max'*sum*0.99;
+          } else {
+            wpl = $4+'$w0max'*sum*-1;
+          }
+          printf("%8d%16G%16G%16G%8d%8d\n",$1,$2,$3,wpl,$5,$6);
+        }
+        else print $0
+      }'
+  }
   while getopts "ghlpqrsa:b:" OPT ; do
     case $OPT in
       h) horse
@@ -147,6 +218,10 @@ else
       p) paik1
         ;;
       q) paik2
+        ;;
+      r) paik3
+        ;;
+      s) paik4
         ;;
       a) a=$OPTARG
         ;;
