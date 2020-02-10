@@ -158,10 +158,10 @@ else
         ;;
       o) origin
         ;;
-      p) impf p
-         impf_smith p
-         impf q
-         impf_smith q
+      p) impf r
+         impf_smith r
+         impf s
+         impf_smith s
         ;;
       s) impf_smith l
          impf_smith h
