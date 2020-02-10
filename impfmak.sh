@@ -158,13 +158,16 @@ else
         {
         if (NR>'$NR_NODE' && NR<'$NR_NEXT' && $4==0 && $1<900000) {
           sum = 0;
-          for(m=1;m<12;m++){
-            sum += B2[m]*sin(m*pi*$2/a)*sin(pi*$3/b);
-          }
           if($2<a || 2*a<$2){
+            for(m=1;m<12;m++){
+              sum += B3[m]*sin(m*pi*$2/a)*sin(pi*$3/b);
+            }
             wpl = $4+'$w0max'*sum*0.99;
           } else {
-            wpl = $4+'$w0max'*sum*-1;
+            for(m=1;m<12;m++){
+              sum += B3[m]*sin(m*pi*($2-a)/a)*sin(pi*$3/b);
+            }
+            wpl = $4+'$w0max'*sum;
           }
           printf("%8d%16G%16G%16G%8d%8d\n",$1,$2,$3,wpl,$5,$6);
         }
@@ -194,13 +197,16 @@ else
         {
         if (NR>'$NR_NODE' && NR<'$NR_NEXT' && $4==0 && $1<900000) {
           sum = 0;
-          for(m=1;m<12;m++){
-            sum += B2[m]*sin(m*pi*$2/a)*sin(pi*$3/b);
-          }
           if($2<a || 2*a<$2){
+            for(m=1;m<12;m++){
+              sum += B4[m]*sin(m*pi*$2/a)*sin(pi*$3/b);
+            }
             wpl = $4+'$w0max'*sum*0.99;
           } else {
-            wpl = $4+'$w0max'*sum*-1;
+            for(m=1;m<12;m++){
+              sum += B4[m]*sin(m*pi*($2-a)/a)*sin(pi*$3/b);
+            }
+            wpl = $4+'$w0max'*sum;
           }
           printf("%8d%16G%16G%16G%8d%8d\n",$1,$2,$3,wpl,$5,$6);
         }
