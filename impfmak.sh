@@ -165,9 +165,9 @@ else
             wpl = $4+'$w0max'*sum*0.99;
           } else {
             for(m=1;m<12;m++){
-              sum += B3[m]*sin(m*pi*$2/a)*sin(pi*$3/b);
+              sum += B3[m]*sin(m*pi*($2-a)/a)*sin(pi*$3/b);
             }
-            wpl = $4+'$w0max'*sum*-1;
+            wpl = $4+'$w0max'*sum;
           }
           printf("%8d%16G%16G%16G%8d%8d\n",$1,$2,$3,wpl,$5,$6);
         }
