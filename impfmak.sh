@@ -160,12 +160,12 @@ else
           sum = 0;
           if($2<a || 2*a<$2){
             for(m=1;m<12;m++){
-              sum += B3[m]*sin(m*pi*$2/a)*sin(pi*$3/b);
+              sum += B3[m]*sin(m*pi*$2/a)*abs(sin(pi*$3/b));
             }
             wpl = $4+'$w0max'*sum*0.99;
           } else {
             for(m=1;m<12;m++){
-              sum += B3[m]*sin(m*pi*($2-a)/a)*sin(pi*$3/b);
+              sum += B3[m]*sin(m*pi*($2-a)/a)*abs(sin(pi*$3/b));
             }
             wpl = $4+'$w0max'*sum;
           }
