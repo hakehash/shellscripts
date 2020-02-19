@@ -34,13 +34,16 @@ else
         {
         if (NR>'$NR_NODE' && NR<'$NR_NEXT' && $4==0 && $1<900000) {
           sum = 0;
-          for(m=1;m<12;m++){
-            sum += A0[m]*sin(m*pi*$2/a)*sin(pi*$3/b);
-          }
           if($2<a || 2*a<$2){
-            wpl = $4+'$w0max'*abs(sum)*0.99;
+            for(m=1;m<12;m++){
+              sum += A0[m]*sin(m*pi*$2/a)*abs(sin(pi*$3/b));
+            }
+            wpl = $4+'$w0max'*sum*0.99;
           } else {
-            wpl = $4+'$w0max'*abs(sum);
+            for(m=1;m<12;m++){
+              sum += A0[m]*sin(m*pi*($2-a)/a)*abs(sin(pi*$3/b));
+            }
+            wpl = $4+'$w0max'*sum;
           }
           printf("%8d%16G%16G%16G%8d%8d\n",$1,$2,$3,wpl,$5,$6);
         }
