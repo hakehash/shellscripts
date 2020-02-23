@@ -25,6 +25,8 @@ else
       ;;
     0.3) LEVEL=-0.3
       ;;
+    *) LEVEL=`awk 'BEGIN{print 0-2.24*'$ALPHA'+9.67*'$ALPHA'*'$ALPHA'-22.82*'$ALPHA'*'$ALPHA'*'$ALPHA'}'`
+      ;;
   esac
 
   cat $DYNFILE |\
