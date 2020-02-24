@@ -140,7 +140,7 @@ else
   }
 
   residual_smith(){
-    for ALPHA in 0.025 0.05 0.1 0.3
+    for ALPHA in 0.025 0.1 0.3
     do
       w0=`echo $ALPHA | awk '{print $1*'$BETA'*'$BETA'*'$t'}'`
       MOD_FILENAME=${ORIG_FILENAME}_w${w0}mm_$1_res
@@ -171,10 +171,14 @@ else
         ;;
       o) origin
         ;;
-      p) impf r
-         impf_smith r
-         impf s
-         impf_smith s
+      p) residual p
+         residual_smith p
+         residual q
+         residual_smith q
+         residual r
+         residual_smith r
+         residual s
+         residual_smith s
         ;;
       s) impf_smith l
          impf_smith h
