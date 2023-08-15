@@ -6,6 +6,7 @@ API_KEY=
 # You can choose default speaker from
 # show, haruka, hikari, takeru, santa, or bear.
 SPEAKER=hikari
+# ogg, mp3, or wav.
 FORMAT=ogg
 
 #Do not change below.
@@ -17,16 +18,16 @@ else
   if [ -p /dev/stdin ]; then
     APITEXT=`cat -`
   elif [ $# -eq 0 ]; then
-    echo -e "usage:\t`basename $0` text -[sfelpdv]"
-    echo -e "\t\tor"
-    echo -e "\tcat script.txt | `basename $0` -[sfelpdv]"
-    echo -e " -s speaker\tspeaker"
-    echo -e " -f wav|ogg|aac\tformat"
-    echo -e " -e emotion\temotion"
-    echo -e " -l [1-4]\temotion_level"
-    echo -e " -p [50-200]\tpitch(%)"
-    echo -e " -d [50-400]\tspeed(%)"
-    echo -e " -v [50-200]\tvolume(%)"
+    echo "usage:\t`basename $0` text -[sfelpdv]"
+    echo "\t\tor"
+    echo "\tcat script.txt | `basename $0` -[sfelpdv]"
+    echo " -s speaker\tspeaker"
+    echo " -f wav|ogg|aac\tformat"
+    echo " -e emotion\temotion"
+    echo " -l [1-4]\temotion_level"
+    echo " -p [50-200]\tpitch(%)"
+    echo " -d [50-400]\tspeed(%)"
+    echo " -v [50-200]\tvolume(%)"
   else
     APITEXT=$1
   fi
@@ -55,11 +56,19 @@ else
      ;;
     esac
   done
+  case $FORMAT in
+    ogg)
+      PLAYER=ogg123
+      ;;
+    mp3)
+      PLAYER=mpg123
+      ;;
+  esac
   if [ "$APITEXT" ]; then
     curl $API_URI -u "$API_KEY:" \
     -d "text=$APITEXT" -d "speaker=$SPEAKER" -d "format=$FORMAT" \
     -d "emotion=$EMOTION" -d "emotion_level=$EMOLEVEL" \
-    -d "pitch=$APITCH" -d "speed=$SPEED" -d "volume=$VOLUME" | ogg123 -
+    -d "pitch=$APITCH" -d "speed=$SPEED" -d "volume=$VOLUME" | $PLAYER -
   fi
 fi
 
