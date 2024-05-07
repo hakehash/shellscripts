@@ -13,6 +13,6 @@ else
   if [ ${OUTPUT#*.} = "m4a" ]; then
     ffmpeg -http_seekable 0 -i $INPUT -vn -c copy $OUTPUT
   else
-    ffmpeg -http_seekable 0 -i $INPUT $OUTPUT
+    ffmpeg -http_seekable 0 -i $INPUT -c copy $OUTPUT
   fi
 fi
