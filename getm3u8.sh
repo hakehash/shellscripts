@@ -10,7 +10,7 @@ else
         ;;
     esac
   done
-  if [${OUTPUT#*.} -eq "m4a"]; then
+  if [ ${OUTPUT#*.} = "m4a" ]; then
     ffmpeg -http_seekable 0 -i $INPUT -vn -c copy $OUTPUT
   else
     ffmpeg -http_seekable 0 -i $INPUT $OUTPUT
